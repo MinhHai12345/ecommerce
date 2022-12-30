@@ -21,4 +21,8 @@ public class Constants {
 
     // Text
     public static final String BLANK = "";
+    public static final String SPACE = " ";
+
+    // Directory
+    public static final String TESS4J_DIRECTORY = "../../../Tess4J/tessdata";
 }

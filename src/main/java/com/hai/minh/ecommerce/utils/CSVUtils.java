@@ -40,7 +40,7 @@ public class CSVUtils {
                     .build()
                     .parse();
         } catch (IOException e) {
-            logger.error(" Convert CSV file to DTO fail! ");
+            logger.error(" Convert CSV file to DTO fail! ".concat(e.getMessage()));
         }
         return Collections.emptyList();
     }
@@ -55,7 +55,7 @@ public class CSVUtils {
             beanToCsv.write(beans);
             streamWriter.flush();
         } catch (CsvDataTypeMismatchException | CsvRequiredFieldEmptyException | IOException e) {
-            logger.error(" Write CSV file from DTOs fail! ");
+            logger.error(" Write CSV file from DTOs fail! ".concat(e.getMessage()));
         }
         return stream.toByteArray();
     }

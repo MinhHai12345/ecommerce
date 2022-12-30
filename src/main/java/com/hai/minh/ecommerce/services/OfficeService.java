@@ -8,5 +8,5 @@ public interface OfficeService {
 
     String buildExcelNameFromPDFFile(String inputName);
 
-    String crackImage();
+    String imageToText(MultipartFile file);
 }

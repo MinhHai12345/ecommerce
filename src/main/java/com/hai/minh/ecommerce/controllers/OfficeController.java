@@ -29,14 +29,15 @@ public class OfficeController extends AbstractController {
     @PostMapping(value = URI + "/pdf-to-excel")
     @ApiOperation(value = "Convert pdf to excel", response = ResponseEntity.class)
     public ResponseEntity<FileSystemResource> pdfToExcel(@RequestParam("file") final MultipartFile file,
-           @RequestParam(value = "isMerged", required = false, defaultValue = "false") final boolean isMerged) throws IOException {
+                @RequestParam(value = "isMerged", required = false, defaultValue = "false") final boolean isMerged)
+            throws IOException {
         return responseFileSystemResourceByByteArray(officeService.pdfToExcel(file, isMerged),
                 officeService.buildExcelNameFromPDFFile(file.getOriginalFilename()));
     }
 
     @PostMapping(value = URI + "/image-to-text")
     @ApiOperation(value = "Convert image to text", response = ResponseEntity.class)
-    public ResponseEntity<Map<String, Object>> imageToText() {
-        return this.success(officeService.crackImage());
+    public ResponseEntity<Map<String, Object>> imageToText(@RequestParam("file") final MultipartFile file) {
+        return this.success(officeService.imageToText(file));
     }
 }
