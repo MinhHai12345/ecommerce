@@ -1,0 +1,21 @@
+version: "3"
+services:
+  ecommerce:
+    image: ecommerce
+    ports:
+      - $APP_PORT:$APP_PORT
+    networks:
+      - ecommerce-mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    networks:
+      - ecommerce-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+
+networks:
+  ecommerce-mysql:
