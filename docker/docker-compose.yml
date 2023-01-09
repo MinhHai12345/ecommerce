@@ -3,7 +3,7 @@ services:
   ecommerce:
     image: ecommerce
     ports:
-      - ${APP_PORT}:${APP_PORT}
+      - "8080:8080"
     networks:
       - ecommerce-mysql
     depends_on:
@@ -14,8 +14,8 @@ services:
     networks:
       - ecommerce-mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=ecommerce
 
 networks:
   ecommerce-mysql:
