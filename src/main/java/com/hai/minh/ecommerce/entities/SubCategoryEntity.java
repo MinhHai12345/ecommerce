@@ -49,7 +49,7 @@ public class SubCategoryEntity extends AbstractEntity {
         this.categoryId = categoryId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory")
     public List<ProductEntity> getProducts() {
         return products;
     }
