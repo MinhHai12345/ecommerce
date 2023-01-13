@@ -36,7 +36,7 @@ public class CategoryEntity extends AbstractEntity {
         this.subCategories = subCategories;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     public List<ProductEntity> getProducts() {
         return products;
     }
