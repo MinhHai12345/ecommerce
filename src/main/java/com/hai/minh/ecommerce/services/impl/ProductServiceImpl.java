@@ -1,6 +1,7 @@
 package com.hai.minh.ecommerce.services.impl;
 
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
+import com.hai.minh.ecommerce.services.BrandService;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.ProductService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
@@ -18,12 +19,13 @@ import java.util.*;
 public class ProductServiceImpl implements ProductService {
 
     private final CategoryService categoryService;
-    private final SubCategoryService subCategoryService;
+    private final BrandService brandService;
+
 
     @Autowired
-    public ProductServiceImpl(CategoryService categoryService, SubCategoryService subCategoryService) {
+    public ProductServiceImpl(CategoryService categoryService, BrandService brandService) {
         this.categoryService = categoryService;
-        this.subCategoryService = subCategoryService;
+        this.brandService = brandService;
     }
 
 
@@ -32,36 +34,13 @@ public class ProductServiceImpl implements ProductService {
         List<CSVProductDTO> productDTOS = CSVUtils.csvToDTO(file, CSVProductDTO.class);
         if (CollectionUtils.isNotEmpty(productDTOS)) {
 
-            /** SAVE CATEGORIES */
+            /** SAVE CATEGORIES AND SUBCATEGORIES*/
             categoryService.saveCategoryWithCSV(productDTOS);
 
-//            /** SAVE SUBCATEGORY */
-//            subCategoryService.saveSubCategoryWithCSV(productDTOS);
-
-
+            /** SAVE BRAND*/
+            brandService.saveBrandWithCSV(productDTOS);
 
         }
-
-//            productDTOS.stream()
-//                    .collect(Collectors.groupingBy(CSVProductDTO::getBrand))
-//                    .entrySet()
-//                    .stream()
-//                    .filter(entry -> entry.getValue().size() > 1)
-//                    .forEach(brand -> {
-//                        BrandEntity brandEntity = brandRepository.findByName(brand.getKey());
-//                        if (brandEntity == null) {
-//                            brandEntity = new BrandEntity();
-//                            brandEntity.setName(brand.getKey());
-//                            BrandEntity finalBrandEntity = brandEntity;
-//                            brand.getValue().forEach(brandValue -> {
-//                                if (brand.getKey().equals(brandValue.getBrand())) {
-//                                    finalBrandEntity.setBrandUrl(brandValue.getBrandUrl());
-//                                }
-//                            });
-//                            brandRepository.save(brandEntity);
-//                        }
-//                    });
-//
 //            productDTOS.stream()
 //                    .forEach(product -> {
 //                        ProductEntity productEntity = productRepository.findByName(product.getName());

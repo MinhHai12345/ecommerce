@@ -9,6 +9,7 @@ import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,9 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Override
     public List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, CategoryEntity categoryEntity) {
 
-        Set<String> subCategoryNames = csvProductDTOs.stream().map(CSVProductDTO::getSubCategory)
+        Set<String> subCategoryNames = csvProductDTOs.stream()
+                .filter(filter -> StringUtils.isNotEmpty(filter.getCategory()) && categoryEntity.getName().equals(filter.getCategory()))
+                .map(CSVProductDTO::getSubCategory)
                 .collect(Collectors.toSet());
 
         List<SubCategoryEntity> subCategoryServices = subCategoryRepository.findByNameIn(subCategoryNames);
@@ -43,7 +46,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         Map<String, SubCategoryEntity> subCategoryEntityMap = subCategoryServices.stream()
                 .collect(Collectors.toMap(SubCategoryEntity::getName, Function.identity()));
         List<SubCategoryEntity> subCategories = csvProductDTOs.stream()
-                .filter(filter -> existSubCategory(filter, subCategoryEntityMap)
+                .filter(filter -> existSubCategory(filter, subCategoryEntityMap, categoryEntity)
                 ).map(it -> {
                     SubCategoryEntity subCategoryEntity = new SubCategoryEntity();
                     subCategoryEntity.setName(it.getSubCategory());
@@ -54,8 +57,9 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap) {
-        boolean isNotExist = subCategoryEntityMap.get(csvProductDTO.getSubCategory()) == null;
+    public boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap, CategoryEntity categoryEntity) {
+        boolean isNotExist = subCategoryEntityMap.get(csvProductDTO.getSubCategory()) == null
+                && StringUtils.isNotEmpty(csvProductDTO.getCategory()) && categoryEntity.getName().equals(csvProductDTO.getCategory());
         if(isNotExist){
             subCategoryEntityMap.put(csvProductDTO.getSubCategory(), new SubCategoryEntity());
         }

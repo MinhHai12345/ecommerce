@@ -9,7 +9,5 @@ import java.util.Map;
 
 public interface SubCategoryService {
     List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, CategoryEntity categoryEntity);
-
-    boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap);
-
+    boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap, CategoryEntity categoryEntity);
 }
