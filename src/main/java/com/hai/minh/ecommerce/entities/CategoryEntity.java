@@ -2,11 +2,7 @@ package com.hai.minh.ecommerce.entities;
 
 import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -27,7 +23,7 @@ public class CategoryEntity extends AbstractEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<SubCategoryEntity> getSubCategories() {
         return subCategories;
     }

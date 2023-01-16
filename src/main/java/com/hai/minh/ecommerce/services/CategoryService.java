@@ -10,5 +10,4 @@ public interface CategoryService {
     void saveCategoryWithCSV( List<CSVProductDTO> csvProductDTOs);
 
     boolean existCategory(CSVProductDTO csvProductDTO, Map<String, CategoryEntity> categoryEntityMap);
-
 }
