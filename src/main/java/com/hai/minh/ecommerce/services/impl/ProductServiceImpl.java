@@ -53,15 +53,15 @@ public class ProductServiceImpl implements ProductService {
 
             List<CategoryEntity> categories = categoryService.saveCategoryWithCSV(productDTOS);
 
-            List<CategoryEntity> findAll = categoryRepository.findAll();
-            List<CategoryEntity> newCategoriesEntity = new ArrayList<>(Stream.of(findAll, categories)
+            List<CategoryEntity> categoriesDB = categoryRepository.findAll();
+            List<CategoryEntity> lstCategory = new ArrayList<>(Stream.of(categoriesDB, categories)
                     .flatMap(List::stream)
                     .collect(Collectors.toMap(CategoryEntity::getName, d -> d,
                             (CategoryEntity x, CategoryEntity y) -> x)).values());
 
-            List<SubCategoryEntity> subCategories = subCategoryService.saveSubCategoryWithCSV(productDTOS, newCategoriesEntity);
+            List<SubCategoryEntity> subCategories = subCategoryService.saveSubCategoryWithCSV(productDTOS, lstCategory);
             List<BrandEntity> brands = brandService.saveBrandWithCSV(productDTOS);
-            saveproductWithCSV(productDTOS, newCategoriesEntity, subCategories, brands);
+            saveproductWithCSV(productDTOS, lstCategory, subCategories, brands);
             return true;
         }
         return false;
@@ -72,10 +72,10 @@ public class ProductServiceImpl implements ProductService {
     public void saveproductWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categories,
                                    List<SubCategoryEntity> subCategories, List<BrandEntity> brands) {
 
-        Set<String> skuNames = csvProductDTOs.stream()
+        Set<String> skus = csvProductDTOs.stream()
                 .map(CSVProductDTO::getModel)
                 .collect(Collectors.toSet());
-        List<ProductEntity> products = productRepository.findBySkuIn(skuNames);
+        List<ProductEntity> products = productRepository.findBySkuIn(skus);
 
         Map<String, ProductEntity> productEntityMap = products.stream()
                 .collect(Collectors.toMap(ProductEntity::getSku, Function.identity()));
