@@ -3,7 +3,6 @@ package com.hai.minh.ecommerce.services.impl;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
-import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.repository.SubCategoryRepository;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,22 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService {
-    private final CategoryRepository categoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
     @Autowired
-    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository,
-                                  CategoryRepository categoryRepository) {
+    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository) {
         this.subCategoryRepository = subCategoryRepository;
-        this.categoryRepository = categoryRepository;
     }
 
     @Transactional
