@@ -26,8 +26,6 @@ public class ProductController extends AbstractController {
     @PostMapping(value = URI + "/import")
     @ApiOperation(value = "Import products", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> importProducts(@RequestParam("file") final MultipartFile file) {
-        productService.importProducts(file);
-        return success(null);
+        return success(productService.importProducts(file));
     }
-
 }

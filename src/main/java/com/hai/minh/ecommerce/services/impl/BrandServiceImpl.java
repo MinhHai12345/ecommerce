@@ -31,10 +31,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<BrandEntity> saveBrandWithCSV(List<CSVProductDTO> csvProductDTO) {
 
-        Set<String> brandName = csvProductDTO.stream()
+        Set<String> brandNames = csvProductDTO.stream()
                 .map(CSVProductDTO::getBrand)
                 .collect(Collectors.toSet());
-        List<BrandEntity> brands = brandRepository.findByNameIn(brandName);
+        List<BrandEntity> brands = brandRepository.findByNameIn(brandNames);
 
         Map<String, BrandEntity> brandsMap = brands.stream()
                 .collect(Collectors.toMap(BrandEntity::getName, Function.identity()));

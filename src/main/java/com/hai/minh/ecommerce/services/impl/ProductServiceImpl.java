@@ -45,16 +45,23 @@ public class ProductServiceImpl implements ProductService {
         this.categoryRepository = categoryRepository;
     }
 
+    @Transactional
     @Override
     public boolean importProducts(MultipartFile file) {
         List<CSVProductDTO> productDTOS = CSVUtils.csvToDTO(file, CSVProductDTO.class);
         if (CollectionUtils.isNotEmpty(productDTOS)) {
 
             List<CategoryEntity> categories = categoryService.saveCategoryWithCSV(productDTOS);
-            List<SubCategoryEntity> subCategories = subCategoryService.saveSubCategoryWithCSV(productDTOS, categories);
-            List<BrandEntity> brands = brandService.saveBrandWithCSV(productDTOS);
 
-            saveproductWithCSV(productDTOS, categories, subCategories, brands);
+            List<CategoryEntity> findAll = categoryRepository.findAll();
+            List<CategoryEntity> newCategoriesEntity = new ArrayList<>(Stream.of(findAll, categories)
+                    .flatMap(List::stream)
+                    .collect(Collectors.toMap(CategoryEntity::getName, d -> d,
+                            (CategoryEntity x, CategoryEntity y) -> x)).values());
+
+            List<SubCategoryEntity> subCategories = subCategoryService.saveSubCategoryWithCSV(productDTOS, newCategoriesEntity);
+            List<BrandEntity> brands = brandService.saveBrandWithCSV(productDTOS);
+            saveproductWithCSV(productDTOS, newCategoriesEntity, subCategories, brands);
             return true;
         }
         return false;
@@ -65,22 +72,15 @@ public class ProductServiceImpl implements ProductService {
     public void saveproductWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categories,
                                    List<SubCategoryEntity> subCategories, List<BrandEntity> brands) {
 
-        List<CategoryEntity> findAll = categoryRepository.findAll();
-
-        List<CategoryEntity> newCategoriesEntity = new ArrayList<>(Stream.of(findAll, categories)
-                .flatMap(List::stream)
-                .collect(Collectors.toMap(CategoryEntity::getName, d -> d,
-                        (CategoryEntity x, CategoryEntity y) -> x == null ? y : x)).values());
-
-        Set<String> sku = csvProductDTOs.stream()
+        Set<String> skuNames = csvProductDTOs.stream()
                 .map(CSVProductDTO::getModel)
                 .collect(Collectors.toSet());
-        List<ProductEntity> products = productRepository.findBySkuIn(sku);
+        List<ProductEntity> products = productRepository.findBySkuIn(skuNames);
 
         Map<String, ProductEntity> productEntityMap = products.stream()
                 .collect(Collectors.toMap(ProductEntity::getSku, Function.identity()));
 
-        Map<String, CategoryEntity> categoryEntityMap = newCategoriesEntity.stream()
+        Map<String, CategoryEntity> categoryEntityMap = categories.stream()
                 .collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
 
         Map<String, SubCategoryEntity> subCategoryEntityMap = subCategories.stream()

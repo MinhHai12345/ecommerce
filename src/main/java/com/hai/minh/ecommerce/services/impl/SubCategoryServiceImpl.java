@@ -34,14 +34,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Override
     public List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categoryEntities) {
 
-        List<CategoryEntity> findAll = categoryRepository.findAll();
-
-        List<CategoryEntity> newCategoriesEntity = new ArrayList<>(Stream.of(findAll, categoryEntities)
-                    .flatMap(List::stream)
-                    .collect(Collectors.toMap(CategoryEntity::getName, d -> d,
-                            (CategoryEntity x, CategoryEntity y) -> x == null ? y : x)).values());
-
-        Map<String, CategoryEntity> categoryEntityMap = newCategoriesEntity.stream()
+        Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream()
                 .collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
 
         Set<String> subCategoryNames = csvProductDTOs.stream()

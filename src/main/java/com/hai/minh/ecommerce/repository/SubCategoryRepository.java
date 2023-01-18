@@ -8,6 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public interface SubCategoryRepository extends JpaRepository<SubCategoryEntity, Long> {
+public interface SubCategoryRepository extends JpaRepository<SubCategoryEntity, Integer> {
     List<SubCategoryEntity> findByNameIn(Collection<String> name);
 }

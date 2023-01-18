@@ -8,6 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity, Integer> {
     List<ProductEntity> findBySkuIn(Collection<String> sku);
 }
