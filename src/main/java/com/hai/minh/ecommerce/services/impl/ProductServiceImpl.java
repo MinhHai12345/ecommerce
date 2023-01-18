@@ -84,13 +84,13 @@ public class ProductServiceImpl implements ProductService {
         Map<String, BrandEntity> brandEntityMap = brands.stream()
                 .collect(Collectors.toMap(BrandEntity::getName, Function.identity()));
 
-
         List<ProductEntity> productEntities = csvProductDTOs.stream()
                 .filter(filter -> existProduct(filter, productEntityMap, categoryEntityMap, subCategoryEntityMap, brandEntityMap)
                 ).map(it -> {
                     ProductEntity product = new ProductEntity();
 
-                    product.setName(productEntityMap.get(it.getName()).getName());
+                    product.setName(it.getName());
+                    product.setImageUrl(it.getImageUrl());
                     product.setBrand(brandEntityMap.get(it.getBrand()));
 
                     product.setSubCategory(subCategoryEntityMap.get(it.getSubCategory()));
