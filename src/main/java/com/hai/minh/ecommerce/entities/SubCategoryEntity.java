@@ -24,7 +24,7 @@ public class SubCategoryEntity extends AbstractEntity {
         this.name = name;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     public CategoryEntity getCategory() {
         return category;
@@ -43,7 +43,7 @@ public class SubCategoryEntity extends AbstractEntity {
         this.categoryId = categoryId;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subCategory", cascade = CascadeType.ALL)
     public List<ProductEntity> getProducts() {
         return products;
     }

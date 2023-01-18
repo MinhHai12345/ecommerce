@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BrandService {
-    void saveBrandWithCSV(List<CSVProductDTO> csvProductDTOs);
+    List<BrandEntity> saveBrandWithCSV(List<CSVProductDTO> csvProductDTO);
 
     boolean existBrand(CSVProductDTO csvProductDTO, Map<String, BrandEntity> brandEntityMap);
 }

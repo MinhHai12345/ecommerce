@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService {
     private final CategoryRepository categoryRepository;
-
     private final SubCategoryRepository subCategoryRepository;
 
     @Autowired
@@ -34,10 +34,13 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, CategoryEntity categoryEntity) {
+    public List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categoryEntities) {
+
+        Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream()
+                .collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
+
 
         Set<String> subCategoryNames = csvProductDTOs.stream()
-                .filter(filter -> StringUtils.isNotEmpty(filter.getCategory()) && categoryEntity.getName().equals(filter.getCategory()))
                 .map(CSVProductDTO::getSubCategory)
                 .collect(Collectors.toSet());
 
@@ -45,22 +48,26 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
         Map<String, SubCategoryEntity> subCategoryEntityMap = subCategoryServices.stream()
                 .collect(Collectors.toMap(SubCategoryEntity::getName, Function.identity()));
+
         List<SubCategoryEntity> subCategories = csvProductDTOs.stream()
-                .filter(filter -> existSubCategory(filter, subCategoryEntityMap, categoryEntity)
-                ).map(it -> {
+                .filter(e -> existSubCategory(e, subCategoryEntityMap, categoryEntityMap.get(e.getCategory())))
+                .map(it -> {
                     SubCategoryEntity subCategoryEntity = new SubCategoryEntity();
                     subCategoryEntity.setName(it.getSubCategory());
-                    subCategoryEntity.setCategory(categoryEntity);
+                    subCategoryEntity.setCategory(categoryEntityMap.get(it.getCategory()));
                     return subCategoryEntity;
                 }).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(subCategories)) {
+            return subCategoryRepository.saveAll(subCategories);
+        }
         return subCategories;
     }
 
     @Override
-    public boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap, CategoryEntity categoryEntity) {
-        boolean isNotExist = subCategoryEntityMap.get(csvProductDTO.getSubCategory()) == null
-                && StringUtils.isNotEmpty(csvProductDTO.getCategory()) && categoryEntity.getName().equals(csvProductDTO.getCategory());
-        if(isNotExist){
+    public boolean existSubCategory(CSVProductDTO csvProductDTO, Map<String, SubCategoryEntity> subCategoryEntityMap, CategoryEntity category) {
+        boolean isNotExist = subCategoryEntityMap.get(csvProductDTO.getSubCategory()) == null && category != null
+                && category.getName().equals(csvProductDTO.getCategory());
+        if (isNotExist) {
             subCategoryEntityMap.put(csvProductDTO.getSubCategory(), new SubCategoryEntity());
         }
         return isNotExist;

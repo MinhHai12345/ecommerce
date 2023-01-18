@@ -2,19 +2,18 @@ package com.hai.minh.ecommerce.services.impl;
 
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
-import com.hai.minh.ecommerce.entities.SubCategoryEntity;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -33,31 +32,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void saveCategoryWithCSV(List<CSVProductDTO> csvProductDTOs) {
-        Set<String> categoryNames = csvProductDTOs.stream().map(CSVProductDTO::getCategory)
-                .collect(Collectors.toSet());
+    public List<CategoryEntity> saveCategoryWithCSV(List<CSVProductDTO> csvProductDTOs) {
+
+        Set<String> categoryNames = csvProductDTOs.stream().map(CSVProductDTO::getCategory).collect(Collectors.toSet());
         List<CategoryEntity> categoryEntities = categoryRepository.findByNameIn(categoryNames);
 
-        Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream()
-                .collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
+        Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream().collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
 
-        List<CategoryEntity> categories = csvProductDTOs.stream()
-                .filter(filter -> existCategory(filter, categoryEntityMap)
-                ).map(it -> {
-                    CategoryEntity categoryEntity = new CategoryEntity();
-                    categoryEntity.setName(it.getCategory());
-                    categoryEntity.setSubCategories(subCategoryService.saveSubCategoryWithCSV(csvProductDTOs, categoryEntity));
-                    return categoryEntity;
-                }).collect(Collectors.toList());
+        List<CategoryEntity> categories = csvProductDTOs.stream().filter(filter -> existCategory(filter, categoryEntityMap)).map(it -> {
+            CategoryEntity categoryEntity = new CategoryEntity();
+            categoryEntity.setName(it.getCategory());
+            return categoryEntity;
+        }).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(categories)) {
-            categoryRepository.saveAll(categories);
+            return categoryRepository.saveAll(categories);
         }
+        return Collections.emptyList();
     }
 
     @Override
     public boolean existCategory(CSVProductDTO csvProductDTO, Map<String, CategoryEntity> categoryEntityMap) {
         boolean isNotExist = categoryEntityMap.get(csvProductDTO.getCategory()) == null;
-        if(isNotExist){
+        if (isNotExist) {
             categoryEntityMap.put(csvProductDTO.getCategory(), new CategoryEntity());
         }
         return isNotExist;

@@ -1,6 +1,7 @@
 package com.hai.minh.ecommerce.entities;
 
 import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
