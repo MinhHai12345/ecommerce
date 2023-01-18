@@ -10,12 +10,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -34,7 +32,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> saveCategoryWithCSV(List<CSVProductDTO> csvProductDTOs) {
 
-        Set<String> categoryNames = csvProductDTOs.stream().map(CSVProductDTO::getCategory).collect(Collectors.toSet());
+        Set<String> categoryNames = csvProductDTOs.stream()
+                .map(CSVProductDTO::getCategory)
+                .collect(Collectors.toSet());
         List<CategoryEntity> categoryEntities = categoryRepository.findByNameIn(categoryNames);
 
         Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream().collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
@@ -45,7 +45,10 @@ public class CategoryServiceImpl implements CategoryService {
             return categoryEntity;
         }).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(categories)) {
-            return categoryRepository.saveAll(categories);
+            List<CategoryEntity> listSave = categoryRepository.saveAll(categories);
+            List<CategoryEntity> findAll = categoryRepository.findAll();
+            return new ArrayList<>(Stream.of(findAll, listSave).flatMap(List::stream)
+                    .collect(Collectors.toMap(CategoryEntity::getName, d -> d, (CategoryEntity x, CategoryEntity y) -> x == null ? y : x)).values());
         }
         return Collections.emptyList();
     }

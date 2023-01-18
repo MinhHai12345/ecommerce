@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -38,7 +40,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
         Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream()
                 .collect(Collectors.toMap(CategoryEntity::getName, Function.identity()));
-
 
         Set<String> subCategoryNames = csvProductDTOs.stream()
                 .map(CSVProductDTO::getSubCategory)
