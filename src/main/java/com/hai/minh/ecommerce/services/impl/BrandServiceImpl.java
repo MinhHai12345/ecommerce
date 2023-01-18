@@ -8,10 +8,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -25,10 +27,14 @@ public class BrandServiceImpl implements BrandService {
         this.brandRepository = brandRepository;
     }
 
+    @Transactional
     @Override
     public List<BrandEntity> saveBrandWithCSV(List<CSVProductDTO> csvProductDTO) {
 
-        List<BrandEntity> brands = brandRepository.findAll();
+        Set<String> brandName = csvProductDTO.stream()
+                .map(CSVProductDTO::getBrand)
+                .collect(Collectors.toSet());
+        List<BrandEntity> brands = brandRepository.findByNameIn(brandName);
 
         Map<String, BrandEntity> brandsMap = brands.stream()
                 .collect(Collectors.toMap(BrandEntity::getName, Function.identity()));

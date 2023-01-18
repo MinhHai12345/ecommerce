@@ -10,6 +10,4 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
     List<CategoryEntity> findByNameIn(Collection<String> name);
-
-    CategoryEntity findByName(String name);
 }

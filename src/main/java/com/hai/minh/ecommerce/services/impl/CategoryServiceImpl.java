@@ -4,16 +4,18 @@ import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
-import com.hai.minh.ecommerce.services.SubCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -21,14 +23,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    private final SubCategoryService subCategoryService;
-
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository, SubCategoryService subCategoryService) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.subCategoryService = subCategoryService;
     }
 
+    @Transactional
     @Override
     public List<CategoryEntity> saveCategoryWithCSV(List<CSVProductDTO> csvProductDTOs) {
 
@@ -45,10 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
             return categoryEntity;
         }).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(categories)) {
-            List<CategoryEntity> listSave = categoryRepository.saveAll(categories);
-            List<CategoryEntity> findAll = categoryRepository.findAll();
-            return new ArrayList<>(Stream.of(findAll, listSave).flatMap(List::stream)
-                    .collect(Collectors.toMap(CategoryEntity::getName, d -> d, (CategoryEntity x, CategoryEntity y) -> x == null ? y : x)).values());
+            return categoryRepository.saveAll(categories);
         }
         return Collections.emptyList();
     }
