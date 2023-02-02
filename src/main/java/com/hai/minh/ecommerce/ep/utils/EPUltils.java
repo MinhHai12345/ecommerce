@@ -1,8 +1,6 @@
 package com.hai.minh.ecommerce.ep.utils;
 
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
-import com.hai.minh.ecommerce.ep.dtos.model.request.EPRequestAccessToken;
-import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

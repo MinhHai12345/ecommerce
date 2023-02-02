@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hai.minh.ecommerce.ep.dtos.common.Data;
 
-
 import java.io.Serializable;
 import java.util.List;
 

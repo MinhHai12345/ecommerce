@@ -1,7 +1,6 @@
 package com.hai.minh.ecommerce.ep.service.Impl;
 
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
-import com.hai.minh.ecommerce.ep.dtos.model.request.EPRequestAccessToken;
 import com.hai.minh.ecommerce.ep.dtos.model.response.EPResponseAccessToken;
 import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
 import com.hai.minh.ecommerce.ep.utils.EPUltils;
