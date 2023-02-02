@@ -16,3 +16,10 @@ spring:
     multipart:
       max-request-size: 10MB
       max-file-size: 10MB
+
+app:
+  elasticpath:
+    url: https://useast.api.elasticpath.com
+    clientID: ukpTS09amWLAsnVj2uaIzvg19gN5ccxJslIKssolYN
+    storeID: cb7e65c2-4c75-4163-b4bf-47dfa5782505
+    clientSecret: ivE9Sw5bQRYJA12UrYV63gasbBEf0L7oL67w1coYz6
