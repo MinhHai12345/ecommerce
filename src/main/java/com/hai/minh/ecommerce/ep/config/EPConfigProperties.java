@@ -2,6 +2,7 @@ package com.hai.minh.ecommerce.ep.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 @Data
@@ -27,4 +28,6 @@ public class EPConfigProperties {
     private String storeIdHeader;
     @Value("${app.header.grant-type}")
     private String grantTypeHeader;
+
+    private HttpHeaders headers;
 }

@@ -13,11 +13,13 @@ public class EPUltils {
 
     @Autowired
     private EPConfigProperties epConfigProperties;
+
     public HttpHeaders buildHeadersForAuthen() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.add(epConfigProperties.getStoreIdHeader(), epConfigProperties.getStoreId());
+        epConfigProperties.setHeaders(headers);
         return headers;
     }
 }

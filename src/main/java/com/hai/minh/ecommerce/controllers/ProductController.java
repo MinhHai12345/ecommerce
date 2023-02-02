@@ -38,6 +38,4 @@ public class ProductController extends AbstractController {
     public ResponseEntity<Map<String, Object>> addProductToEP() {
         return success(epAccessTokenService.getAccessToken());
     }
-
-
 }
