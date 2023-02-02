@@ -28,4 +28,10 @@ public class ProductController extends AbstractController {
     public ResponseEntity<Map<String, Object>> importProducts(@RequestParam("file") final MultipartFile file) {
         return success(productService.importProducts(file));
     }
+
+    @PostMapping(value = URI + "/addProductToEP")
+    @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
+    public ResponseEntity<Map<String, Object>> addProductToEP() {
+        return success(null);
+    }
 }

@@ -18,4 +18,6 @@ public interface ProductService {
                             List<SubCategoryEntity> subCategories, List<BrandEntity> brands);
 
     boolean existProduct(CSVProductDTO filter, Map<String, ProductEntity> productEntityMap);
+
+    boolean createProductToEP();
 }

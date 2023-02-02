@@ -117,4 +117,13 @@ public class ProductServiceImpl implements ProductService {
         }
         return isNotExist;
     }
+
+    @Override
+    public boolean createProductToEP() {
+        List<ProductEntity> products = productRepository.findAll();
+        if (products != null) {
+
+        }
+        return false;
+    }
 }
