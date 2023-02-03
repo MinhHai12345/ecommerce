@@ -11,6 +11,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -35,6 +37,8 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
     private final AtomicReference<EPToken> atomicRefToken = new AtomicReference<>(EPToken.expiredToken());
 
     @Override
+    @Retryable( value = Exception.class,
+            maxAttempts = 4, backoff = @Backoff(delay = 100))
     public EPToken fetchToken() {
         HttpHeaders headers = epUltils.buildHeadersForAuthen();
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();

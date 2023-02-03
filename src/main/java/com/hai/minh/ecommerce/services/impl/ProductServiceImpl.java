@@ -5,6 +5,7 @@ import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
+import com.hai.minh.ecommerce.ep.service.EPProductService;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.repository.ProductRepository;
 import com.hai.minh.ecommerce.services.BrandService;
@@ -35,14 +36,16 @@ public class ProductServiceImpl implements ProductService {
     private final SubCategoryService subCategoryService;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final EPProductService epProductService;
 
     @Autowired
-    public ProductServiceImpl(CategoryService categoryService, BrandService brandService, SubCategoryService subCategoryService, ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(CategoryService categoryService, BrandService brandService, SubCategoryService subCategoryService, ProductRepository productRepository, CategoryRepository categoryRepository, EPProductService epProductService) {
         this.categoryService = categoryService;
         this.brandService = brandService;
         this.subCategoryService = subCategoryService;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.epProductService = epProductService;
     }
 
     @Transactional
@@ -122,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
     public boolean createProductToEP() {
         List<ProductEntity> products = productRepository.findAll();
         if (products != null) {
-
+            epProductService.createEPProduct(products);
         }
         return false;
     }

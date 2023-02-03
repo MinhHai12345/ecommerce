@@ -23,8 +23,6 @@ public class ProductController extends AbstractController {
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private EPAccessTokenService epAccessTokenService;
 
     @PostMapping(value = URI + "/import")
     @ApiOperation(value = "Import products", response = ResponseEntity.class)
@@ -35,6 +33,6 @@ public class ProductController extends AbstractController {
     @PostMapping(value = URI + "/addProductToEP")
     @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> addProductToEP() {
-        return success(epAccessTokenService.getToken());
+        return success(productService.createProductToEP());
     }
 }

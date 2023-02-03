@@ -26,7 +26,6 @@
         <commons-io.version>2.4</commons-io.version>
         <org.apache.poi.version>5.2.0</org.apache.poi.version>
         <net.sourceforge.tess4j.version>5.5.0</net.sourceforge.tess4j.version>
-
     </properties>
 
     <repositories>
@@ -133,8 +132,12 @@
             <version>${net.sourceforge.tess4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+            <version>2.0.0</version>
+        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -144,5 +147,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
