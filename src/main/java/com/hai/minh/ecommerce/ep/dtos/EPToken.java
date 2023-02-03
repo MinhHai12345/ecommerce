@@ -41,7 +41,6 @@ public class EPToken implements Serializable {
         return new EPToken(TOKEN_TYPE_BEARER, "expired", 0L);
     }
     public boolean isExpired() {
-        log.info("NOW : {} ---- EXPIRED : {}", Instant.now().getEpochSecond(), expiresAt);
         return Instant.now().getEpochSecond() >  expiresAt;
     }
     public String value() {
