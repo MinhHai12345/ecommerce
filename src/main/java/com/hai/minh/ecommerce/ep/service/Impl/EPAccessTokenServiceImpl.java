@@ -1,7 +1,7 @@
 package com.hai.minh.ecommerce.ep.service.Impl;
 
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
-import com.hai.minh.ecommerce.ep.dtos.model.response.EPResponseAccessToken;
+import com.hai.minh.ecommerce.ep.dtos.EPToken;
 import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
 import com.hai.minh.ecommerce.ep.utils.EPUltils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.hai.minh.ecommerce.ep.utils.StringUltils.ACCESS_TOKEN;
 import static com.hai.minh.ecommerce.ep.utils.StringUltils.OAUTH;
@@ -30,8 +32,10 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
     @Autowired
     private EPUltils epUltils;
 
+    private final AtomicReference<EPToken> atomicRefToken = new AtomicReference<>(EPToken.expiredToken());
+
     @Override
-    public String getAccessToken() {
+    public EPToken fetchToken() {
         HttpHeaders headers = epUltils.buildHeadersForAuthen();
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add(configProperties.getClientIdHeader(), configProperties.getClientId());
@@ -42,15 +46,24 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
         String url = configProperties.getEpPath() + OAUTH + ACCESS_TOKEN;
 
         try{
-            EPResponseAccessToken responseAccessToken = restTemplate.exchange(url, HttpMethod.POST, entity,
-                    new ParameterizedTypeReference<EPResponseAccessToken>() {
+            EPToken token = restTemplate.exchange(url, HttpMethod.POST, entity,
+                    new ParameterizedTypeReference<EPToken>() {
                     }).getBody();
-            if(StringUtils.isNotEmpty(responseAccessToken.getAccessToken())){
-                return responseAccessToken.getAccessToken();
+            if(StringUtils.isNotEmpty(token.getAccessToken())){
+                atomicRefToken.set(token);
+                return token;
             }
         }catch (Exception e){
             log.error(this.getClass().toString().concat("Request access token {} ".concat(e.getMessage())));
         }
-        return StringUtils.EMPTY;
+        return null;
+    }
+
+    @Override
+    public EPToken getToken() {
+        if (atomicRefToken.get().isExpired()) {
+            atomicRefToken.set(this.fetchToken());
+        }
+        return atomicRefToken.get();
     }
 }

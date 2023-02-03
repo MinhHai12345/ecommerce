@@ -2,7 +2,6 @@ package com.hai.minh.ecommerce.controllers;
 
 import com.hai.minh.ecommerce.controllers.commons.AbstractController;
 import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
-import com.hai.minh.ecommerce.ep.utils.EPUltils;
 import com.hai.minh.ecommerce.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +35,6 @@ public class ProductController extends AbstractController {
     @PostMapping(value = URI + "/addProductToEP")
     @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> addProductToEP() {
-        return success(epAccessTokenService.getAccessToken());
+        return success(epAccessTokenService.getToken());
     }
 }
