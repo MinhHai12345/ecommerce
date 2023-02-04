@@ -25,4 +25,6 @@ public class Constants {
 
     // Directory
     public static final String TESS4J_DIRECTORY = "../../../Tess4J/tessdata";
+
+    public static final String URI = "/product";
 }

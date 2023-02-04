@@ -26,11 +26,11 @@ public class EPProductBaseDto implements Serializable {
     @JsonProperty("is_deleted")
     private boolean isDeleted;
 
-    public boolean getIsDeleted(){
+    public boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(boolean isDeleted){
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 }

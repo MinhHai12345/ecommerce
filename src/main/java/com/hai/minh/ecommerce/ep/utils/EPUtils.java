@@ -15,6 +15,7 @@ public class EPUtils {
 
     @Autowired
     private EPConfigProperties epConfigProperties;
+
     @Autowired
     private EPAccessTokenService accessTokenService;
 
