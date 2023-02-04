@@ -1,7 +1,7 @@
 package com.hai.minh.ecommerce.controllers;
 
+import com.hai.minh.ecommerce.commons.ResponseData;
 import com.hai.minh.ecommerce.controllers.commons.AbstractController;
-import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
 import com.hai.minh.ecommerce.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +20,6 @@ import java.util.Map;
 @Api(value = "API for Product")
 public class ProductController extends AbstractController {
     private static final String URI = "/product";
-
     @Autowired
     private ProductService productService;
 
@@ -29,10 +28,9 @@ public class ProductController extends AbstractController {
     public ResponseEntity<Map<String, Object>> importProducts(@RequestParam("file") final MultipartFile file) {
         return success(productService.importProducts(file));
     }
-
     @PostMapping(value = URI + "/addProductToEP")
     @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
-    public ResponseEntity<Map<String, Object>> addProductToEP() {
-        return success(productService.createProductToEP());
+    public ResponseData addProductToEP() {
+        return productService.createProductToEP();
     }
 }

@@ -1,5 +1,6 @@
 package com.hai.minh.ecommerce.services;
 
+import com.hai.minh.ecommerce.commons.ResponseData;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
@@ -19,5 +20,5 @@ public interface ProductService {
 
     boolean existProduct(CSVProductDTO filter, Map<String, ProductEntity> productEntityMap);
 
-    boolean createProductToEP();
+    ResponseData createProductToEP();
 }

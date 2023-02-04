@@ -31,5 +31,8 @@ public class EPProductDto extends EPProductBaseDto implements Serializable {
     private EPProductRelationship relationships;
     @JsonProperty("product_variation_id")
     private String productVariationId;
-    private double cost;
+    @JsonProperty("status")
+    private String status;
+    @JsonProperty("description")
+    private String description;
 }

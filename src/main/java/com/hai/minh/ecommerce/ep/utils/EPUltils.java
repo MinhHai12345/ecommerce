@@ -1,6 +1,7 @@
 package com.hai.minh.ecommerce.ep.utils;
 
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
+import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,12 +14,14 @@ public class EPUltils {
 
     @Autowired
     private EPConfigProperties epConfigProperties;
+    @Autowired
+    private EPAccessTokenService accessTokenService;
 
-    public HttpHeaders buildHeadersForAuthen() {
+    public HttpHeaders buildHeaders() {
         HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessTokenService.getToken());
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add(epConfigProperties.getStoreIdHeader(), epConfigProperties.getStoreId());
+        headers.setContentType(MediaType.APPLICATION_JSON);
         epConfigProperties.setHeaders(headers);
         return headers;
     }

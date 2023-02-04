@@ -1,10 +1,14 @@
 package com.hai.minh.ecommerce.services.impl;
 
+import com.hai.minh.ecommerce.commons.ResponseData;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
+import com.hai.minh.ecommerce.ep.common.EpData;
+import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
+import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
 import com.hai.minh.ecommerce.ep.service.EPProductService;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.repository.ProductRepository;
@@ -36,15 +40,17 @@ public class ProductServiceImpl implements ProductService {
     private final SubCategoryService subCategoryService;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final EPProductConverter epProductConverter;
     private final EPProductService epProductService;
 
     @Autowired
-    public ProductServiceImpl(CategoryService categoryService, BrandService brandService, SubCategoryService subCategoryService, ProductRepository productRepository, CategoryRepository categoryRepository, EPProductService epProductService) {
+    public ProductServiceImpl(CategoryService categoryService, BrandService brandService, SubCategoryService subCategoryService, ProductRepository productRepository, CategoryRepository categoryRepository, EPProductConverter epProductConverter, EPProductService epProductService) {
         this.categoryService = categoryService;
         this.brandService = brandService;
         this.subCategoryService = subCategoryService;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.epProductConverter = epProductConverter;
         this.epProductService = epProductService;
     }
 
@@ -100,6 +106,7 @@ public class ProductServiceImpl implements ProductService {
                     product.setName(it.getName());
                     product.setSku(it.getModel());
                     product.setImageUrl(it.getImageUrl());
+                    product.setPrice(it.getCurrentPrice());
 
                     product.setBrand(brandEntityMap.get(it.getBrand()));
                     product.setSubCategory(subCategoryEntityMap.get(it.getSubCategory()));
@@ -122,11 +129,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean createProductToEP() {
+    public ResponseData createProductToEP() {
         List<ProductEntity> products = productRepository.findAll();
-        if (products != null) {
-            epProductService.createEPProduct(products);
+        log.info("START PRO SERVICES");
+        if(products != null){
+            for (ProductEntity product : products) {
+                log.info("MIDDLE PRO SERVICES");
+                final EpData<EPProductDto> request = epProductConverter.convertToEpProductData(product);
+                epProductService.createEPProduct(request);
+                log.info("END PRO SERVICES");
+            }
         }
-        return false;
+        return null;
     }
 }

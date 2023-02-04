@@ -20,4 +20,11 @@ public class EPProductBaseDto implements Serializable {
     private String description;
     @JsonProperty("is_deleted")
     private boolean isDeleted;
+    public boolean getIsDeleted(){
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted){
+        this.isDeleted = isDeleted;
+    }
 }

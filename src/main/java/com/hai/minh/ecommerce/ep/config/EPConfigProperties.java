@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 public class EPConfigProperties {
     @Value("${app.elasticpath.url}")
     private String epPath;
+    @Value("${app.elasticpath.urlV2}")
+    private String epPathV2;
     @Value("${app.elasticpath.clientID}")
     private String clientId;
     @Value("${app.elasticpath.clientSecret}")
@@ -18,16 +20,6 @@ public class EPConfigProperties {
     private String storeId;
     @Value("${app.grand-type}")
     private String grantType;
-
-    /** HEADER */
-    @Value("${app.header.client-id}")
-    private String clientIdHeader;
-    @Value("${app.header.client-secret}")
-    private String clientSecretHeader;
-    @Value("${app.header.store-id}")
-    private String storeIdHeader;
-    @Value("${app.header.grant-type}")
-    private String grantTypeHeader;
-
     private HttpHeaders headers;
+    private Long expireAt;
 }

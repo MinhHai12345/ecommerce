@@ -21,9 +21,9 @@ app:
   elasticpath:
     url: https://useast.api.elasticpath.com
     urlV2: https://useast.api.elasticpath.com/v2
-    clientID: ukpTS09amWLAsnVj2uaIzvg19gN5ccxJslIKssolYN
-    storeID: cb7e65c2-4c75-4163-b4bf-47dfa5782505
-    clientSecret: ivE9Sw5bQRYJA12UrYV63gasbBEf0L7oL67w1coYz6
+    clientID: ogcFRDog273HKSuTEt4h06vp7iXQCYtrpvMyfX0Ttj
+    storeID: 349f53f5-c546-4c90-83ff-bbb2eb015064
+    clientSecret: Q9kbwjVYGKCZHdu4n9p4X5CfxMnhEJhChgHVNil4WJ
   grand-type: client_credentials
 
 rest-template:

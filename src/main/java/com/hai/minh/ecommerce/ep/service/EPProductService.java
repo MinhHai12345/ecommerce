@@ -1,10 +1,9 @@
 package com.hai.minh.ecommerce.ep.service;
 
-import com.hai.minh.ecommerce.entities.ProductEntity;
+import com.hai.minh.ecommerce.commons.ResponseData;
+import com.hai.minh.ecommerce.ep.common.EpData;
 import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
 
-import java.util.List;
-
 public interface EPProductService {
-    EPProductDto createEPProduct(List<ProductEntity> productEntities);
+    ResponseData<EPProductDto> createEPProduct(EpData<EPProductDto> request);
 }

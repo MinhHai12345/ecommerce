@@ -3,7 +3,6 @@ package com.hai.minh.ecommerce.ep.service.Impl;
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
 import com.hai.minh.ecommerce.ep.dtos.EPToken;
 import com.hai.minh.ecommerce.ep.service.EPAccessTokenService;
-import com.hai.minh.ecommerce.ep.utils.EPUltils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +10,16 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.time.Instant;
+import java.util.Collections;
 
-import static com.hai.minh.ecommerce.ep.utils.StringUltils.ACCESS_TOKEN;
-import static com.hai.minh.ecommerce.ep.utils.StringUltils.OAUTH;
+import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.*;
 
 @Slf4j
 @Service
@@ -31,43 +29,45 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
     private RestTemplate restTemplate;
     @Autowired
     private EPConfigProperties configProperties;
-    @Autowired
-    private EPUltils epUltils;
-
-    private final AtomicReference<EPToken> atomicRefToken = new AtomicReference<>(EPToken.expiredToken());
-
     @Override
-    @Retryable( value = Exception.class,
-            maxAttempts = 4, backoff = @Backoff(delay = 100))
-    public EPToken fetchToken() {
-        HttpHeaders headers = epUltils.buildHeadersForAuthen();
+    public String fetchToken() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add(STORE_ID, configProperties.getStoreId());
+        configProperties.setHeaders(headers);
+
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add(configProperties.getClientIdHeader(), configProperties.getClientId());
-        body.add(configProperties.getClientSecretHeader(), configProperties.getClientSecret());
-        body.add(configProperties.getGrantTypeHeader(), configProperties.getGrantType());
+        body.add(CLIENT_ID_HEADER, configProperties.getClientId());
+        body.add(CLIENT_SECRET, configProperties.getClientSecret());
+        body.add(GRANT_TYPE, configProperties.getGrantType());
 
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);
         String url = configProperties.getEpPath() + OAUTH + ACCESS_TOKEN;
-
         try{
             EPToken token = restTemplate.exchange(url, HttpMethod.POST, entity,
                     new ParameterizedTypeReference<EPToken>() {
                     }).getBody();
             if(StringUtils.isNotEmpty(token.getAccessToken())){
-                atomicRefToken.set(token);
-                return token;
+                configProperties.getHeaders().setBearerAuth(token.getAccessToken());
+                log.info("Access Token : {}", token.getAccessToken());
+                configProperties.setExpireAt(token.getExpiresAt());
+                return token.getAccessToken();
             }
         }catch (Exception e){
             log.error(this.getClass().toString().concat("Request access token {} ".concat(e.getMessage())));
         }
         return null;
     }
-
     @Override
-    public EPToken getToken() {
-        if (atomicRefToken.get().isExpired()) {
-            atomicRefToken.set(this.fetchToken());
+    public String getToken() {
+        if (configProperties.getExpireAt() == null
+                || Instant.now().getEpochSecond() > configProperties.getExpireAt()) {
+            this.fetchToken();
         }
-        return atomicRefToken.get();
+        return configProperties.getHeaders()
+                    .getFirst(AUTHORIZATION)
+                    .split(WHITE_SPACE)[1];
     }
 }
