@@ -14,14 +14,19 @@ import java.io.Serializable;
 @Data
 public class EPToken implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @JsonProperty("token_type")
     private String tokenType;
+
     @JsonProperty("identifier")
     private String identifier;
+
     @JsonProperty("expires")
     private Long expiresAt;
+
     @JsonProperty("expires_in")
     private Long expiresIn;
+
     @JsonProperty("access_token")
     private String accessToken;
 }

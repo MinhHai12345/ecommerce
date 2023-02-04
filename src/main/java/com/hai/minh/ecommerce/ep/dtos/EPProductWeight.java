@@ -13,6 +13,7 @@ public class EPProductWeight implements Serializable {
 
     @JsonProperty("unit")
     private String unit;
+
     @JsonProperty("value")
     private String value;
 }

@@ -21,12 +21,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService {
-    private final SubCategoryRepository subCategoryRepository;
-
     @Autowired
-    public SubCategoryServiceImpl(SubCategoryRepository subCategoryRepository) {
-        this.subCategoryRepository = subCategoryRepository;
-    }
+    private SubCategoryRepository subCategoryRepository;
 
     @Transactional
     @Override

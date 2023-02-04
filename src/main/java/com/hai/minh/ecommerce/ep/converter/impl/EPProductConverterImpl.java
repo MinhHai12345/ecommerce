@@ -1,7 +1,7 @@
-package com.hai.minh.ecommerce.ep.converter.Impl;
+package com.hai.minh.ecommerce.ep.converter.impl;
 
 import com.hai.minh.ecommerce.entities.ProductEntity;
-import com.hai.minh.ecommerce.ep.common.EpData;
+import com.hai.minh.ecommerce.ep.dtos.common.EPData;
 import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
 import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
 import com.hai.minh.ecommerce.ep.dtos.EPProductPrice;
@@ -11,28 +11,29 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 
-@Component("epProductConverterImpl")
+import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.*;
+
+@Component()
 public class EPProductConverterImpl implements EPProductConverter {
-    public static final String PHYSICAL = "physical";
 
     @Override
-    public EpData<EPProductDto> convertToEpProductData(ProductEntity productEntity) {
+    public EPData<EPProductDto> convertToEpProductData(ProductEntity productEntity) {
         final EPProductDto epProductDto = new EPProductDto();
         epProductDto.setCommodityType(PHYSICAL);
-        epProductDto.setDescription("NO DESCRIPTION");
+        epProductDto.setDescription(NO_DESCRIPTION);
         epProductDto.setIsDeleted(false);
         final EPProductPrice epProductPrice = new EPProductPrice();
         epProductPrice.setAmount(productEntity.getPrice().multiply(new BigDecimal(100)));
-        epProductPrice.setCurrency("USD");
+        epProductPrice.setCurrency(USD);
         epProductPrice.setIncludesTax(false);
         epProductDto.setPrice(Collections.singletonList(epProductPrice));
         epProductDto.setName(productEntity.getName());
         epProductDto.setSku(productEntity.getSku());
-        epProductDto.setType("product");
-        epProductDto.setStatus("live");
+        epProductDto.setType(PRODUCT);
+        epProductDto.setStatus(LIVE);
         epProductDto.setSlug(String.valueOf(new Date().getTime()));
         epProductDto.setManageStock(true);
-        final EpData<EPProductDto> epData = new EpData<>();
+        final EPData<EPProductDto> epData = new EPData<>();
         epData.setData(epProductDto);
         return epData;
     }

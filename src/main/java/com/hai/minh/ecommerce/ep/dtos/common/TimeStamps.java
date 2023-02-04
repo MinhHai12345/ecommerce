@@ -9,9 +9,11 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TimeStamps implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @JsonProperty("created_at")
     private String createAt;
+
     @JsonProperty("updated_at")
     private String updatedAt;
 }

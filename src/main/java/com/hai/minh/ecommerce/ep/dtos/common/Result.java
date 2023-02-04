@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.ep.dtos.pageInfo;
+package com.hai.minh.ecommerce.ep.dtos.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

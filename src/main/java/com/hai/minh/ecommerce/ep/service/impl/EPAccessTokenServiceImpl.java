@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.ep.service.Impl;
+package com.hai.minh.ecommerce.ep.service.impl;
 
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
 import com.hai.minh.ecommerce.ep.dtos.EPToken;
@@ -16,7 +16,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.Instant;
 import java.util.Collections;
 
 import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.*;
@@ -36,7 +35,6 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.add(STORE_ID, configProperties.getStoreId());
-        configProperties.setHeaders(headers);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add(CLIENT_ID_HEADER, configProperties.getClientId());
@@ -49,7 +47,7 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
             EPToken token = restTemplate.exchange(url, HttpMethod.POST, entity,
                     new ParameterizedTypeReference<EPToken>() {
                     }).getBody();
-            if(StringUtils.isNotEmpty(token.getAccessToken())){
+            if(token.getAccessToken() != null && StringUtils.isNotEmpty(token.getAccessToken())){
                 configProperties.getHeaders().setBearerAuth(token.getAccessToken());
                 log.info("Access Token : {}", token.getAccessToken());
                 configProperties.setExpireAt(token.getExpiresAt());
@@ -58,16 +56,6 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
         }catch (Exception e){
             log.error(this.getClass().toString().concat("Request access token {} ".concat(e.getMessage())));
         }
-        return null;
-    }
-    @Override
-    public String getToken() {
-        if (configProperties.getExpireAt() == null
-                || Instant.now().getEpochSecond() > configProperties.getExpireAt()) {
-            this.fetchToken();
-        }
-        return configProperties.getHeaders()
-                    .getFirst(AUTHORIZATION)
-                    .split(WHITE_SPACE)[1];
+        return StringUtils.EMPTY;
     }
 }

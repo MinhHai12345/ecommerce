@@ -11,10 +11,13 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPProductPrice implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @JsonProperty("amount")
     private BigDecimal amount;
+
     @JsonProperty("currency")
     private String currency;
+
     @JsonProperty("includes_tax")
     private boolean includesTax;
 }

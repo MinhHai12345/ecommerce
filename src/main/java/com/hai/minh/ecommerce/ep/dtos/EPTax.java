@@ -8,12 +8,15 @@ import java.io.Serializable;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EPStock implements Serializable {
+public class EPTax implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @JsonProperty("level")
-    private Integer level;
+    @JsonProperty("amount")
+    private Integer amount;
 
-    @JsonProperty("availability")
-    private String availability;
+    @JsonProperty("currency")
+    private String currency;
+
+    @JsonProperty("formatted")
+    private String formatted;
 }

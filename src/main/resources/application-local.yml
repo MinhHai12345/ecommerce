@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
   servlet:
     multipart:
@@ -24,8 +24,4 @@ app:
     clientID: ogcFRDog273HKSuTEt4h06vp7iXQCYtrpvMyfX0Ttj
     storeID: 349f53f5-c546-4c90-83ff-bbb2eb015064
     clientSecret: Q9kbwjVYGKCZHdu4n9p4X5CfxMnhEJhChgHVNil4WJ
-  grand-type: client_credentials
-
-rest-template:
-  connect-timeout: 108000000
-  read-timeout: 300000
+    grand-type: client_credentials

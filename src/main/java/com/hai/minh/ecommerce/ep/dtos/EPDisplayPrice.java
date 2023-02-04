@@ -13,18 +13,7 @@ public class EPDisplayPrice implements Serializable {
 
     @JsonProperty("with_tax")
     private EPTax withTax;
+
     @JsonProperty("without_tax")
     private EPTax withoutTax;
-
-    @Data
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private class EPTax implements Serializable {
-        private static final long serialVersionUID = 1L;
-        @JsonProperty("amount")
-        private Integer amount;
-        @JsonProperty("currency")
-        private String currency;
-        @JsonProperty("formatted")
-        private String formatted;
-    }
 }

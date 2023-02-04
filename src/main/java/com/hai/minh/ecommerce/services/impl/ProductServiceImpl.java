@@ -1,12 +1,11 @@
 package com.hai.minh.ecommerce.services.impl;
 
-import com.hai.minh.ecommerce.commons.ResponseData;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
-import com.hai.minh.ecommerce.ep.common.EpData;
+import com.hai.minh.ecommerce.ep.dtos.common.EPData;
 import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
 import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
 import com.hai.minh.ecommerce.ep.service.EPProductService;
@@ -20,6 +19,7 @@ import com.hai.minh.ecommerce.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,24 +35,20 @@ import java.util.stream.Stream;
 @Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final CategoryService categoryService;
-    private final BrandService brandService;
-    private final SubCategoryService subCategoryService;
-    private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
-    private final EPProductConverter epProductConverter;
-    private final EPProductService epProductService;
-
     @Autowired
-    public ProductServiceImpl(CategoryService categoryService, BrandService brandService, SubCategoryService subCategoryService, ProductRepository productRepository, CategoryRepository categoryRepository, EPProductConverter epProductConverter, EPProductService epProductService) {
-        this.categoryService = categoryService;
-        this.brandService = brandService;
-        this.subCategoryService = subCategoryService;
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-        this.epProductConverter = epProductConverter;
-        this.epProductService = epProductService;
-    }
+    private CategoryService categoryService;
+    @Autowired
+    private BrandService brandService;
+    @Autowired
+    private SubCategoryService subCategoryService;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private EPProductConverter epProductConverter;
+    @Autowired
+    private EPProductService epProductService;
 
     @Transactional
     @Override
@@ -70,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
 
             List<SubCategoryEntity> subCategories = subCategoryService.saveSubCategoryWithCSV(productDTOS, lstCategory);
             List<BrandEntity> brands = brandService.saveBrandWithCSV(productDTOS);
-            saveproductWithCSV(productDTOS, lstCategory, subCategories, brands);
+            saveProductWithCSV(productDTOS, lstCategory, subCategories, brands);
             return true;
         }
         return false;
@@ -78,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public void saveproductWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categories,
+    public void saveProductWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categories,
                                    List<SubCategoryEntity> subCategories, List<BrandEntity> brands) {
 
         Set<String> skus = csvProductDTOs.stream()
@@ -129,15 +125,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseData createProductToEP() {
+    public ResponseEntity<Map<String, Object>> createProductToEP() {
         List<ProductEntity> products = productRepository.findAll();
-        log.info("START PRO SERVICES");
-        if(products != null){
+        log.info("START PRODUCT SERVICES");
+        if(CollectionUtils.isNotEmpty(products)){
             for (ProductEntity product : products) {
-                log.info("MIDDLE PRO SERVICES");
-                final EpData<EPProductDto> request = epProductConverter.convertToEpProductData(product);
+                log.info("MIDDLE PRODUCT SERVICES");
+                final EPData<EPProductDto> request = epProductConverter.convertToEpProductData(product);
                 epProductService.createEPProduct(request);
-                log.info("END PRO SERVICES");
+                log.info("END PRODUCT SERVICES");
             }
         }
         return null;

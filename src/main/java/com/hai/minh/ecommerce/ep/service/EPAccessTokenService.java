@@ -4,5 +4,4 @@ import com.hai.minh.ecommerce.ep.dtos.EPToken;
 
 public interface EPAccessTokenService {
     String fetchToken();
-    String getToken();
 }

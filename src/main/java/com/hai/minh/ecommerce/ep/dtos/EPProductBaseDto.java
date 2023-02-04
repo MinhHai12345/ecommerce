@@ -10,16 +10,22 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPProductBaseDto implements Serializable {
     private static final long serialVersion = 1L;
+
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("name")
     private String name;
+
     @JsonProperty("status")
     private String status;
+
     @JsonProperty("description")
     private String description;
+
     @JsonProperty("is_deleted")
     private boolean isDeleted;
+
     public boolean getIsDeleted(){
         return isDeleted;
     }
