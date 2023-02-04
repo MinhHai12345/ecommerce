@@ -13,7 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 public class EPToken implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -7259504786712395231L;
 
     @JsonProperty("token_type")
     private String tokenType;

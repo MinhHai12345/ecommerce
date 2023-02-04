@@ -3,10 +3,12 @@ package com.hai.minh.ecommerce.ep.dtos.common;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-@Data
-public class Meta {
-    private static final long serialVersionUID = 1L;
+import java.io.Serializable;
 
+@Data
+public class Meta implements Serializable {
+
+    private static final long serialVersionUID = 2614293973089944697L;
     @JsonProperty("results")
     private Result results;
 

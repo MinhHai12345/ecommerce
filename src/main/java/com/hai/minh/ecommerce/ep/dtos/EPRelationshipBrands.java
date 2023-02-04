@@ -11,7 +11,8 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPRelationshipBrands implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 8703694799645713194L;
 
     @JsonProperty("data")
     private List<DataCommon> dataBrands;

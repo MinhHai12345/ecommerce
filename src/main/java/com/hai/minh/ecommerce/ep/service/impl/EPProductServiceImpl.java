@@ -4,6 +4,7 @@ import com.hai.minh.ecommerce.commons.ResponseData;
 import com.hai.minh.ecommerce.ep.dtos.common.EPData;
 import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
 import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
+import com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants;
 import com.hai.minh.ecommerce.ep.service.EPProductService;
 import com.hai.minh.ecommerce.ep.utils.EPUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import static com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants.PRODUCT_URL;
 
 @Service
 @Slf4j
@@ -41,7 +40,7 @@ public class EPProductServiceImpl implements EPProductService {
                 final HttpHeaders headers = epUltils.buildHeaders();
                 final HttpEntity<EPData<EPProductDto>> entity = new HttpEntity<>(request, headers);
 
-                final String url = configProperties.getEpPathV2() + PRODUCT_URL;
+                final String url = configProperties.getEpPathV2() + EPConstants.PRODUCT_URL;
                 final ResponseEntity<EPData<EPProductDto>> responseEntity = restTemplate
                         .exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<EPData<EPProductDto>>() {
                         });

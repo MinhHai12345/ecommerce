@@ -10,7 +10,8 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPProductMeta implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 2051376807606459980L;
 
     @JsonProperty("timestamps")
     private TimeStamps timeStamps;

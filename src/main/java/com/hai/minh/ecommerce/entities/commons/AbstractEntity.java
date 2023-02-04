@@ -15,8 +15,8 @@ import java.sql.Timestamp;
 
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
-    private static final long serialVersionUID = -1555907175707976629L;
 
+    private static final long serialVersionUID = 1931996178528043954L;
     private Integer id;
     private boolean isDeleted;
     private Timestamp createdAt;

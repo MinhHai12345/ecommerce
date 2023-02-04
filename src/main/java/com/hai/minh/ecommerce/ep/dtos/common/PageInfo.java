@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 @Data
 public class PageInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1237844434431561530L;
 
     @JsonProperty("limit")
     private int limit;

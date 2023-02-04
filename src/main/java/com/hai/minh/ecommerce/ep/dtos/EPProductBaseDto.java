@@ -9,7 +9,8 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPProductBaseDto implements Serializable {
-    private static final long serialVersion = 1L;
+
+    private static final long serialVersionUID = -6299182539192187491L;
 
     @JsonProperty("id")
     private String id;
@@ -25,12 +26,4 @@ public class EPProductBaseDto implements Serializable {
 
     @JsonProperty("is_deleted")
     private boolean isDeleted;
-
-    public boolean getIsDeleted(){
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean isDeleted){
-        this.isDeleted = isDeleted;
-    }
 }

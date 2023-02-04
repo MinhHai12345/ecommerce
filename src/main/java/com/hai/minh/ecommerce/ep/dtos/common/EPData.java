@@ -14,7 +14,8 @@ import java.io.Serializable;
 @Setter
 public class EPData<T> implements Serializable {
 
-    private static final long serialVersionUID = -7667221873686301566L;
+    private static final long serialVersionUID = -6444319184862460309L;
+
     @JsonProperty("data")
     private T data;
 

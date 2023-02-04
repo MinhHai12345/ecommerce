@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPProductPrice implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 7115364657600813456L;
 
     @JsonProperty("amount")
     private BigDecimal amount;

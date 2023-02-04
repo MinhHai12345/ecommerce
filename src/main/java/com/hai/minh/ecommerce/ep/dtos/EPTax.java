@@ -9,7 +9,8 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EPTax implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = -6116677758300247566L;
 
     @JsonProperty("amount")
     private Integer amount;

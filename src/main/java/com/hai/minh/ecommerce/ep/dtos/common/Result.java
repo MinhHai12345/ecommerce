@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 public class Result implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -978756528948192085L;
 
     @JsonProperty("total")
     private int total;
