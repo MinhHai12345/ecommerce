@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.PRODUCT_URL;
+import static com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants.PRODUCT_URL;
 
 @Service
 @Slf4j
@@ -25,10 +25,13 @@ public class EPProductServiceImpl implements EPProductService {
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private EPUtils epUltils;
+
     @Autowired
     private EPConfigProperties configProperties;
+
     @Override
     public ResponseData<EPProductDto> createEPProduct(EPData<EPProductDto> request) {
         log.info("START PROCESS CREATE EP PRODUCT");

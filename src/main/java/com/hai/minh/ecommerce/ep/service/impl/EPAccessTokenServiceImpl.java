@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 
-import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.*;
+import static com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants.*;
 
 @Slf4j
 @Service
@@ -26,8 +26,10 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Autowired
     private EPConfigProperties configProperties;
+
     @Override
     public String fetchToken() {
 
@@ -47,7 +49,7 @@ public class EPAccessTokenServiceImpl implements EPAccessTokenService {
             EPToken token = restTemplate.exchange(url, HttpMethod.POST, entity,
                     new ParameterizedTypeReference<EPToken>() {
                     }).getBody();
-            if(token.getAccessToken() != null && StringUtils.isNotEmpty(token.getAccessToken())){
+            if(token != null && StringUtils.isNotEmpty(token.getAccessToken())){
                 configProperties.getHeaders().setBearerAuth(token.getAccessToken());
                 log.info("Access Token : {}", token.getAccessToken());
                 configProperties.setExpireAt(token.getExpiresAt());

@@ -35,18 +35,25 @@ import java.util.stream.Stream;
 @Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
+
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private BrandService brandService;
+
     @Autowired
     private SubCategoryService subCategoryService;
+
     @Autowired
     private ProductRepository productRepository;
+
     @Autowired
     private CategoryRepository categoryRepository;
+
     @Autowired
     private EPProductConverter epProductConverter;
+
     @Autowired
     private EPProductService epProductService;
 

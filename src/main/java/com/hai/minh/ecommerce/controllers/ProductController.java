@@ -19,6 +19,7 @@ import java.util.Map;
 @Api(value = "API for Product")
 public class ProductController extends AbstractController {
     private static final String URI = "/product";
+
     @Autowired
     private ProductService productService;
 
@@ -30,6 +31,6 @@ public class ProductController extends AbstractController {
     @PostMapping(value = URI + "/addProductToEP")
     @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> addProductToEP() {
-        return productService.createProductToEP();
+        return success(productService.createProductToEP());
     }
 }

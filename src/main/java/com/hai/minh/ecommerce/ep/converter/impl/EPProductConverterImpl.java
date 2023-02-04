@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Date;
 
-import static com.hai.minh.ecommerce.ep.utils.EPStringUtils.*;
+import static com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants.*;
 
-@Component()
+@Component
 public class EPProductConverterImpl implements EPProductConverter {
 
     @Override
