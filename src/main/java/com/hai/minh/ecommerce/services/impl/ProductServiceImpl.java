@@ -1,14 +1,13 @@
 package com.hai.minh.ecommerce.services.impl;
 
+import com.hai.minh.ecommerce.configs.props.RabbitConfigProperties;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
-import com.hai.minh.ecommerce.ep.dtos.common.EPData;
 import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
 import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
-import com.hai.minh.ecommerce.ep.service.EPProductService;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.repository.ProductRepository;
 import com.hai.minh.ecommerce.services.BrandService;
@@ -18,6 +17,7 @@ import com.hai.minh.ecommerce.services.SubCategoryService;
 import com.hai.minh.ecommerce.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,10 @@ public class ProductServiceImpl implements ProductService {
     private EPProductConverter epProductConverter;
 
     @Autowired
-    private EPProductService epProductService;
+    private AmqpTemplate amqpTemplate;
+
+    @Autowired
+    private RabbitConfigProperties rabbitConfigProperties;
 
     @Transactional
     @Override
@@ -133,16 +136,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Map<String, Object>> createProductToEP() {
-        List<ProductEntity> products = productRepository.findAll();
         log.info("START PRODUCT SERVICES");
-        if(CollectionUtils.isNotEmpty(products)){
+        List<ProductEntity> products = productRepository.findAll();
+        if (CollectionUtils.isNotEmpty(products)) {
             for (ProductEntity product : products) {
-                log.info("MIDDLE PRODUCT SERVICES");
-                final EPData<EPProductDto> request = epProductConverter.convertToEpProductData(product);
-                epProductService.createEPProduct(request);
-                log.info("END PRODUCT SERVICES");
+                log.info("LOOP FOREACH PRODUCT SERVICES");
+                final EPProductDto request = epProductConverter.convertToEpProductData(product);
+                amqpTemplate.convertAndSend(rabbitConfigProperties.getQueueCreateProduct(), request);
             }
         }
+        log.info("END PRODUCT SERVICES");
         return null;
     }
 }

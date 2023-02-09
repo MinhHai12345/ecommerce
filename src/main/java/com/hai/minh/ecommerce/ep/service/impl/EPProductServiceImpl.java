@@ -36,7 +36,7 @@ public class EPProductServiceImpl implements EPProductService {
         log.info("START PROCESS CREATE EP PRODUCT");
         ResponseData<EPProductDto> responseData = new ResponseData<>();
         try {
-            if(request != null){
+            if (request != null) {
                 final HttpHeaders headers = epUltils.buildHeaders();
                 final HttpEntity<EPData<EPProductDto>> entity = new HttpEntity<>(request, headers);
 

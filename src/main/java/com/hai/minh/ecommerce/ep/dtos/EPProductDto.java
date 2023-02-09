@@ -16,6 +16,9 @@ public class EPProductDto extends EPProductBaseDto implements Serializable {
     @JsonProperty("type")
     private String type;
 
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("slug")
     private String slug;
 

@@ -20,7 +20,7 @@
         <io.springfox.version>2.6.1</io.springfox.version>
         <com.opencsv.version>4.6</com.opencsv.version>
         <org.projectlombok.version>1.18.24</org.projectlombok.version>
-<!--        <e-iceblue.version>4.4.1</e-iceblue.version>-->
+        <!--        <e-iceblue.version>4.4.1</e-iceblue.version>-->
         <e-iceblue.pdf.version>8.12.6</e-iceblue.pdf.version>
         <e-iceblue.doc.version>10.12.4</e-iceblue.doc.version>
         <commons-io.version>2.4</commons-io.version>
@@ -132,11 +132,19 @@
             <version>${net.sourceforge.tess4j.version}</version>
         </dependency>
 
+        <!--RABBITMQ-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
         <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-            <version>2.0.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "products")
 public class ProductEntity extends AbstractEntity {
-    private static final long serialVersionUID = 5509227373941026343L;
 
+    private static final long serialVersionUID = 3426699509452566115L;
     private String sku;
     private String name;
     private String description;

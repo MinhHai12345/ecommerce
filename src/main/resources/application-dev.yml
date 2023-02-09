@@ -11,7 +11,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
   servlet:
     multipart:
       max-request-size: 10MB
@@ -25,3 +24,12 @@ app:
     storeID: cb7e65c2-4c75-4163-b4bf-47dfa5782505
     clientSecret: ivE9Sw5bQRYJA12UrYV63gasbBEf0L7oL67w1coYz6
     grand-type: client_credentials
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  publisher-returns: true
+  virtual-host: /
+  queue:
+    create-product-queue: producer-create-product
