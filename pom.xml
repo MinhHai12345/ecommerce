@@ -131,20 +131,10 @@
             <artifactId>tess4j</artifactId>
             <version>${net.sourceforge.tess4j.version}</version>
         </dependency>
-
-        <!--RABBITMQ-->
-        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
-
     </dependencies>
 
     <build>

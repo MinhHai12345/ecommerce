@@ -35,7 +35,10 @@ public class EPProductConverterImpl implements EPProductConverter {
 
         epProductDto.setType(EPConstants.PRODUCT);
         epProductDto.setStatus(EPConstants.LIVE);
+
+//        epProductDto.setSlug(String.valueOf(new Date().getTime()) + random.nextInt(9991999));
         epProductDto.setSlug(String.valueOf(new Date().getTime()));
+
         epProductDto.setManageStock(true);
         return epProductDto;
     }
