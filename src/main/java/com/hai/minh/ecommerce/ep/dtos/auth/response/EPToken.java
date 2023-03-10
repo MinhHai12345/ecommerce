@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.ep.dtos;
+package com.hai.minh.ecommerce.ep.dtos.auth.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

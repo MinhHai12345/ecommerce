@@ -1,13 +1,12 @@
 package com.hai.minh.ecommerce.services.impl;
 
-import com.hai.minh.ecommerce.configs.props.RabbitConfigProperties;
 import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
 import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
-import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
+import com.hai.minh.ecommerce.ep.dtos.products.EPProductDto;
 import com.hai.minh.ecommerce.repository.CategoryRepository;
 import com.hai.minh.ecommerce.repository.ProductRepository;
 import com.hai.minh.ecommerce.services.BrandService;
@@ -17,7 +16,6 @@ import com.hai.minh.ecommerce.services.SubCategoryService;
 import com.hai.minh.ecommerce.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,12 +52,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private EPProductConverter epProductConverter;
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
-    @Autowired
-    private RabbitConfigProperties rabbitConfigProperties;
-
     @Transactional
     @Override
     public boolean importProducts(MultipartFile file) {
@@ -82,8 +74,8 @@ public class ProductServiceImpl implements ProductService {
         return false;
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void saveProductWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categories,
                                    List<SubCategoryEntity> subCategories, List<BrandEntity> brands) {
 
@@ -105,8 +97,8 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toMap(BrandEntity::getName, Function.identity()));
 
         List<ProductEntity> productEntities = csvProductDTOs.stream()
-                .filter(filter -> existProduct(filter, productEntityMap)
-                ).map(it -> {
+                .filter(filter -> existProduct(filter, productEntityMap))
+                .map(it -> {
                     ProductEntity product = new ProductEntity();
 
                     product.setName(it.getName());
@@ -142,7 +134,7 @@ public class ProductServiceImpl implements ProductService {
             for (ProductEntity product : products) {
                 log.info("LOOP FOREACH PRODUCT SERVICES");
                 final EPProductDto request = epProductConverter.convertToEpProductData(product);
-                amqpTemplate.convertAndSend(rabbitConfigProperties.getQueueCreateProduct(), request);
+//                amqpTemplate.convertAndSend(rabbitConfigProperties.getQueueCreateProduct(), request);
             }
         }
         log.info("END PRODUCT SERVICES");

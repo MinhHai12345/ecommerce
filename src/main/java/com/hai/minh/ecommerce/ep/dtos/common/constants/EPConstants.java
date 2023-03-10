@@ -1,5 +1,7 @@
 package com.hai.minh.ecommerce.ep.dtos.common.constants;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class EPConstants {
 
     /** HEADER */
@@ -25,8 +27,6 @@ public class EPConstants {
     public static final String SLASH = "\"";
 
     public static final String EQUALS = "=";
-
-    public static final String WHITE_SPACE = " ";
 
     /** URL */
     public static final String OAUTH = "/oauth";

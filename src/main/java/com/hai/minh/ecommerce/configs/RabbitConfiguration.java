@@ -1,57 +1,60 @@
 package com.hai.minh.ecommerce.configs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hai.minh.ecommerce.commons.constants.RabbitConstants;
-import com.hai.minh.ecommerce.configs.props.RabbitConfigProperties;
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Primary;
 
-@EnableRabbit
+import javax.annotation.Resource;
+
 @Configuration
 public class RabbitConfiguration {
+    private static final String EP_PRODUCT_QUEUE_NAME = "ep-product";
 
-    @Autowired
-    private RabbitConfigProperties rabbitProperties;
+    @Resource
+    private RabbitProperties rabbitProperties;
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses(rabbitProperties.getAddresses() + ":" + rabbitProperties.getPort());
-        connectionFactory.setUsername(rabbitProperties.getUsername());
-        connectionFactory.setPassword(rabbitProperties.getPassword());
-        connectionFactory.setPublisherConfirms(true);
-        return connectionFactory;
+    @Primary
+    public ConnectionFactory rabbitConnectionFactory() {
+        CachingConnectionFactory rabbitConnectionFactory = new CachingConnectionFactory();
+        rabbitConnectionFactory.setAddresses(rabbitProperties.getAddresses());
+        rabbitConnectionFactory.setUsername(rabbitProperties.getUsername());
+        rabbitConnectionFactory.setPassword(rabbitProperties.getPassword());
+        rabbitConnectionFactory.setPort(rabbitProperties.getPort());
+        return rabbitConnectionFactory;
     }
 
     @Bean
-    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public RabbitTemplate rabbitTemplateNew(ObjectMapper mapper) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setMessageConverter(new Jackson2JsonMessageConverter(mapper));
-        return template;
-    }
-    @Bean
-    public Queue createQueue() {
-        return new Queue(RabbitConstants.CREATE_PRODUCT_QUEUE, true);
+    public Jackson2JsonMessageConverter converter() {
+        return new Jackson2JsonMessageConverter();
     }
 
     @Bean
-    public Exchange diectExchange() {
-        return new DirectExchange(RabbitConstants.EXCHANGE_NAME, true, false);
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(this.rabbitConnectionFactory());
+        rabbitTemplate.setMessageConverter(this.converter());
+        return rabbitTemplate;
     }
 
-    @Bean
-    public Binding queueBinding() {
-        return new Binding(RabbitConstants.CREATE_PRODUCT_QUEUE, Binding.DestinationType.QUEUE,
-                RabbitConstants.EXCHANGE_NAME, "", null);
-    }
+//    @Bean
+//    SimpleMessageListenerContainer productContainer(@Qualifier(value = "rabbitConnectionFactory") ConnectionFactory rabbitConnectionFactory,
+//            final MessageListenerAdapter productListenerAdapter) {
+//        final SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(rabbitConnectionFactory);
+//        container.setQueueNames(EP_PRODUCT_QUEUE_NAME);
+//        container.setMessageListener(productListenerAdapter);
+//        return container;
+//    }
+//
+//    @Bean
+//    MessageListenerAdapter productListenerAdapter(final BrandService receiver, final MessageConverter converter) {
+//        final MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(receiver);
+//        messageListenerAdapter.setMessageConverter(converter);
+//        return messageListenerAdapter;
+//    }
+
 }

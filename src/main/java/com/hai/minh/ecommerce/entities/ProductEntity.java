@@ -23,7 +23,6 @@ public class ProductEntity extends AbstractEntity {
     private Integer subCatgoryId;
     private BrandEntity brand;
     private Integer brandId;
-    // brand, category, sub-category, variation
 
     @Column
     public String getSku() {
@@ -145,4 +144,5 @@ public class ProductEntity extends AbstractEntity {
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
     }
+
 }

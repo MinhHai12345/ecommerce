@@ -26,6 +26,7 @@
         <commons-io.version>2.4</commons-io.version>
         <org.apache.poi.version>5.2.0</org.apache.poi.version>
         <net.sourceforge.tess4j.version>5.5.0</net.sourceforge.tess4j.version>
+        <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
     </properties>
 
     <repositories>
@@ -45,6 +46,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <dependency>
@@ -131,9 +137,16 @@
             <artifactId>tess4j</artifactId>
             <version>${net.sourceforge.tess4j.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jsonwebtoken.version}</version>
         </dependency>
     </dependencies>
 

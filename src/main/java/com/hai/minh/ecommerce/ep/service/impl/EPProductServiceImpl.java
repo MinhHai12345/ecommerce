@@ -1,9 +1,8 @@
 package com.hai.minh.ecommerce.ep.service.impl;
 
-import com.hai.minh.ecommerce.commons.ResponseData;
+import com.hai.minh.ecommerce.configs.properties.AppProperties;
+import com.hai.minh.ecommerce.ep.dtos.products.EPProductDto;
 import com.hai.minh.ecommerce.ep.dtos.common.EPData;
-import com.hai.minh.ecommerce.ep.config.EPConfigProperties;
-import com.hai.minh.ecommerce.ep.dtos.EPProductDto;
 import com.hai.minh.ecommerce.ep.dtos.common.constants.EPConstants;
 import com.hai.minh.ecommerce.ep.service.EPProductService;
 import com.hai.minh.ecommerce.ep.utils.EPUtils;
@@ -29,18 +28,18 @@ public class EPProductServiceImpl implements EPProductService {
     private EPUtils epUltils;
 
     @Autowired
-    private EPConfigProperties configProperties;
+    private AppProperties appProperties;
 
     @Override
-    public ResponseData<EPProductDto> createEPProduct(EPData<EPProductDto> request) {
+    public EPData<EPProductDto> createEPProduct(EPData<EPProductDto> request) {
         log.info("START PROCESS CREATE EP PRODUCT");
-        ResponseData<EPProductDto> responseData = new ResponseData<>();
+        EPData<EPProductDto> responseData = new EPData<>();
         try {
             if (request != null) {
                 final HttpHeaders headers = epUltils.buildHeaders();
                 final HttpEntity<EPData<EPProductDto>> entity = new HttpEntity<>(request, headers);
 
-                final String url = configProperties.getEpPathV2() + EPConstants.PRODUCT_URL;
+                final String url = appProperties.getElasticPath().getUrlV2() + EPConstants.PRODUCT_URL;
                 final ResponseEntity<EPData<EPProductDto>> responseEntity = restTemplate
                         .exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<EPData<EPProductDto>>() {
                         });

@@ -1,7 +1,8 @@
-package com.hai.minh.ecommerce.ep.dtos;
+package com.hai.minh.ecommerce.ep.dtos.products;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hai.minh.ecommerce.ep.dtos.common.EPDisplayPrice;
 import com.hai.minh.ecommerce.ep.dtos.common.TimeStamps;
 import lombok.Data;
 

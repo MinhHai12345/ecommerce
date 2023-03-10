@@ -1,24 +1,23 @@
-package com.hai.minh.ecommerce.ep.dtos;
+package com.hai.minh.ecommerce.ep.dtos.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EPProductPrice implements Serializable {
+public class EPTax implements Serializable {
 
-    private static final long serialVersionUID = 7115364657600813456L;
+    private static final long serialVersionUID = -6116677758300247566L;
 
     @JsonProperty("amount")
-    private BigDecimal amount;
+    private Integer amount;
 
     @JsonProperty("currency")
     private String currency;
 
-    @JsonProperty("includes_tax")
-    private boolean includesTax;
+    @JsonProperty("formatted")
+    private String formatted;
 }

@@ -1,6 +1,5 @@
 package com.hai.minh.ecommerce.controllers;
 
-import com.hai.minh.ecommerce.commons.constants.Constants;
 import com.hai.minh.ecommerce.controllers.commons.AbstractController;
 import com.hai.minh.ecommerce.services.ProductService;
 import io.swagger.annotations.Api;
@@ -16,20 +15,20 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 @Api(value = "API for Product")
 public class ProductController extends AbstractController {
 
     @Autowired
     private ProductService productService;
 
-    @PostMapping(value = Constants.URI + "/import")
+    @PostMapping(value = "/import")
     @ApiOperation(value = "Import products", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> importProducts(@RequestParam("file") final MultipartFile file) {
         return success(productService.importProducts(file));
     }
 
-    @PostMapping(value = Constants.URI + "/addProductToEP")
+    @PostMapping
     @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> addProductToEP() {
         return success(productService.createProductToEP());

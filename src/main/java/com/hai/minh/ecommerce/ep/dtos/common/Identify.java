@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DataCommon implements Serializable {
+public class Identify implements Serializable {
 
     private static final long serialVersionUID = 5569969625889613055L;
 

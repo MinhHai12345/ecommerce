@@ -21,11 +21,12 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class SubCategoryServiceImpl implements SubCategoryService {
+
     @Autowired
     private SubCategoryRepository subCategoryRepository;
 
-    @Transactional
     @Override
+    @Transactional
     public List<SubCategoryEntity> saveSubCategoryWithCSV(List<CSVProductDTO> csvProductDTOs, List<CategoryEntity> categoryEntities) {
 
         Map<String, CategoryEntity> categoryEntityMap = categoryEntities.stream()
@@ -63,4 +64,5 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         }
         return isNotExist;
     }
+
 }

@@ -10,11 +10,16 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   servlet:
     multipart:
       max-request-size: 10MB
       max-file-size: 10MB
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: dev
+    password: DevDigi@123
 
 app:
   elasticpath:
@@ -24,12 +29,6 @@ app:
     storeID: 12bb98c6-4abf-409f-889e-608d40e6c088
     clientSecret: 8fDrgGPo3CoIJ6dQElYtjm0VWbqjcGA2k1B7QtNjqt
     grand-type: client_credentials
-rabbitmq:
-  host: localhost
-  port: 5672
-  username: guest
-  password: guest
-  publisher-returns: true
-  virtual-host: /
-  queue:
-    create-product-queue: producer-create-product
+  jwt:
+    secret: haivo
+    access-token-validity-in-seconds: 60

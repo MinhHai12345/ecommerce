@@ -45,9 +45,9 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     public String buildExcelNameFromPDFFile(String inputName) {
         String preName = StringUtils.isNotEmpty(inputName) ?
-                inputName.replace(Constants.PDF_EXTENSION, Constants.BLANK)
+                inputName.replace(Constants.PDF_EXTENSION, StringUtils.EMPTY)
                 : Constants.EXCEL_DEFAULT_NAME;
-        return preName.concat(Constants.SPACE)
+        return preName.concat(StringUtils.SPACE)
                 .concat(new SimpleDateFormat(Constants.DATE_FORMAT_YYYYMMDDHHMMSS_EXTENSION)
                         .format(new Date())).concat(Constants.EXCEL_EXTENSION);
     }

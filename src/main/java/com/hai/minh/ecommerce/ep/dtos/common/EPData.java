@@ -6,15 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
-public class EPData<T> implements Serializable {
-
-    private static final long serialVersionUID = -6444319184862460309L;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+public class EPData<T> {
 
     @JsonProperty("data")
     private T data;

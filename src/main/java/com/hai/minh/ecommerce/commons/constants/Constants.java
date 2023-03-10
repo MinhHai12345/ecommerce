@@ -19,12 +19,7 @@ public class Constants {
     public static final String PDF_EXTENSION = ".pdf";
     public static final String EXCEL_DEFAULT_NAME = "excel";
 
-    // Text
-    public static final String BLANK = "";
-    public static final String SPACE = " ";
-
     // Directory
     public static final String TESS4J_DIRECTORY = "../../../Tess4J/tessdata";
 
-    public static final String URI = "/product";
 }
