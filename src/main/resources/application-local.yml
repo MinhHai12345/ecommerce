@@ -24,10 +24,10 @@ spring:
 app:
   elasticpath:
     url: https://useast.api.elasticpath.com
-    urlV2: https://useast.api.elasticpath.com/v2
-    clientID: ULYEqnLgyZnJoqL00fCwPHLki689jn3b27zMaZ0eZM
-    storeID: 12bb98c6-4abf-409f-889e-608d40e6c088
-    clientSecret: 8fDrgGPo3CoIJ6dQElYtjm0VWbqjcGA2k1B7QtNjqt
+    url-v2: https://useast.api.elasticpath.com/v2
+    client-id: ukpTS09amWLAsnVj2uaIzvg19gN5ccxJslIKssolYN
+    store-id: cb7e65c2-4c75-4163-b4bf-47dfa5782505
+    client-secret: ivE9Sw5bQRYJA12UrYV63gasbBEf0L7oL67w1coYz6
     grand-type: client_credentials
   jwt:
     secret: haivo

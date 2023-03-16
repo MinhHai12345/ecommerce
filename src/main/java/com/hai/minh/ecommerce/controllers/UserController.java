@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @Api(value = "API for User")
 public class UserController extends AbstractController {
-    private static final String URI = "/user";
 
-    @PostMapping(value = URI)
+    @PostMapping
     @ApiOperation(value = "Create user", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> create(@RequestBody final UserDTO userDTO) {
         return success(null);

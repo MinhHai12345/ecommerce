@@ -1,0 +1,44 @@
+{
+  "properties": [
+    {
+      "name": "app.elasticpath.client-id",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.client-id."
+    },
+    {
+      "name": "app.elasticpath.url",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.url."
+    },
+    {
+      "name": "app.elasticpath.url-v2",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.url-v2."
+    },
+    {
+      "name": "app.elasticpath.store-id",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.store-id."
+    },
+    {
+      "name": "app.elasticpath.client-secret",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.client-secret."
+    },
+    {
+      "name": "app.elasticpath.grand-type",
+      "type": "java.lang.String",
+      "description": "Description for app.elasticpath.grand-type."
+    },
+    {
+      "name": "app.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for app.jwt.secret."
+    },
+    {
+      "name": "app.jwt.access-token-validity-in-seconds",
+      "type": "java.lang.String",
+      "description": "Description for app.jwt.access-token-validity-in-seconds."
+    }
+  ]
+}
