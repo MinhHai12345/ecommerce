@@ -6,7 +6,7 @@ import com.hai.minh.ecommerce.entities.RoleEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,8 +26,8 @@ public class RoleConverterImpl implements RoleConverter {
     }
 
     @Override
-    public List<RoleDTO> convertRoleEntitiesToDTOs(final Collection<RoleEntity> entities) {
-        return entities.stream().map(this::convertRoleEntityToDTO).collect(Collectors.toList());
+    public Set<RoleDTO> convertRoleEntitiesToDTOs(final Collection<RoleEntity> entities) {
+        return entities.stream().map(this::convertRoleEntityToDTO).collect(Collectors.toSet());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class RoleConverterImpl implements RoleConverter {
     }
 
     @Override
-    public List<RoleEntity> convertRoleDTOsToEntities(final Collection<RoleDTO> dtos) {
-        return dtos.stream().map(this::convertRoleDTOToEntity).collect(Collectors.toList());
+    public Set<RoleEntity> convertRoleDTOsToEntities(final Collection<RoleDTO> dtos) {
+        return dtos.stream().map(this::convertRoleDTOToEntity).collect(Collectors.toSet());
     }
 }

@@ -1,6 +1,7 @@
 package com.hai.minh.ecommerce.entities;
 
 import com.google.common.collect.Sets;
+import com.hai.minh.ecommerce.dtos.UserDTO;
 import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
 
 import javax.persistence.*;
@@ -53,5 +54,16 @@ public class UserEntity extends AbstractEntity {
 
     public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
+    }
+
+
+    public void transfer(UserDTO dto, Set<RoleEntity> roles) {
+        if (dto != null) {
+            this.setEmail(dto.getUsername());
+            this.setUsername(dto.getUsername());
+            this.roles = roles;
+            this.setId(dto.getId());
+
+        }
     }
 }
