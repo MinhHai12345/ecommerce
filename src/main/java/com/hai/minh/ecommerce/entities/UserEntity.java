@@ -61,9 +61,8 @@ public class UserEntity extends AbstractEntity {
         if (dto != null) {
             this.setEmail(dto.getUsername());
             this.setUsername(dto.getUsername());
-            this.roles = roles;
+            this.setRoles(roles);
             this.setId(dto.getId());
-
         }
     }
 }

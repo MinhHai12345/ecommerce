@@ -27,6 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         .authorities(it.getRoles().stream()
                                 .map(role -> new SimpleGrantedAuthority(role.getRole().name()))
                                 .collect(Collectors.toList())).build()
-        ).orElseThrow(() -> new EntityExistsException("User " + username + " doesn't exist in database"));
+        ).orElseThrow(() -> new EntityExistsException("User " + username + " not found!"));
     }
 }
