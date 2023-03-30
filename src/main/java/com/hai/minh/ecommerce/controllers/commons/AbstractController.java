@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public abstract class AbstractController {
         final FileSystemResource fileSystemResource = new FileSystemResource(file);
         file.deleteOnExit();
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + fileName + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(file.length())
                 .body(fileSystemResource);
     }

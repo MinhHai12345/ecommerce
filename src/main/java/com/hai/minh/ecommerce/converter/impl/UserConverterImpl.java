@@ -6,6 +6,7 @@ import com.hai.minh.ecommerce.converter.UserConverter;
 import com.hai.minh.ecommerce.dtos.UserDTO;
 import com.hai.minh.ecommerce.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -17,6 +18,9 @@ public class UserConverterImpl implements UserConverter {
 
     @Autowired
     private RoleConverter roleConverter;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDTO convertUserEntityToDTO(final UserEntity entity) {
@@ -45,7 +49,7 @@ public class UserConverterImpl implements UserConverter {
             entity = new UserEntity();
             entity.setId(dto.getId());
             entity.setUsername(dto.getUsername());
-            entity.setPassword(dto.getPassword());
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
             entity.setRoles(Sets.newHashSet(roleConverter.convertRoleDTOsToEntities(dto.getRoles())));
         }
         return entity;

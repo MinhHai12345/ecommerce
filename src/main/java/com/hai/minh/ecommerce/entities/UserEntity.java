@@ -59,10 +59,11 @@ public class UserEntity extends AbstractEntity {
 
     public void transfer(UserDTO dto, Set<RoleEntity> roles) {
         if (dto != null) {
-            this.setEmail(dto.getUsername());
+            this.setId(dto.getId());
+            this.setEmail(dto.getEmail());
             this.setUsername(dto.getUsername());
             this.setRoles(roles);
-            this.setId(dto.getId());
+            this.setDeleted(dto.isDeleted());
         }
     }
 }
