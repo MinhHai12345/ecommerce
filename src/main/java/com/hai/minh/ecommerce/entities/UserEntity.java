@@ -4,7 +4,14 @@ import com.google.common.collect.Sets;
 import com.hai.minh.ecommerce.dtos.UserDTO;
 import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Entity

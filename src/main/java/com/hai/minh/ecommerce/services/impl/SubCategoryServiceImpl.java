@@ -7,9 +7,7 @@ import com.hai.minh.ecommerce.repository.SubCategoryRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import com.hai.minh.ecommerce.utils.CSVUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +53,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                             return entity;
                         }).collect(Collectors.toSet());
                 if (CollectionUtils.isNotEmpty(subCategoryEntities)) {
-                    subCategoryRepository.saveAllAndFlush(subCategoryEntities);
+                    subCategoryRepository.saveAll(subCategoryEntities);
                 }
                 return true;
             }
