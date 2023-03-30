@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,13 +38,13 @@ public class CategoryServiceImpl implements CategoryService {
             if (CollectionUtils.isNotEmpty(productDTOS)) {
                 Map<String, CategoryEntity> categoryEntityMaps = this.getCategoryMaps(productDTOS);
 
-                List<CategoryEntity> categoryEntities = productDTOS.stream()
+                Set<CategoryEntity> categoryEntities = productDTOS.stream()
                         .filter(it -> categoryEntityMaps.get(it.getCategory()) == null)
                         .map(category -> {
                             CategoryEntity entity = new CategoryEntity();
                             entity.setName(category.getCategory());
                             return entity;
-                        }).collect(Collectors.toList());
+                        }).collect(Collectors.toSet());
                 if (CollectionUtils.isNotEmpty(categoryEntities)) {
                     categoryRepository.saveAll(categoryEntities);
                 }
@@ -82,6 +83,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryEntity getCategoryEntity(Map<String, CategoryEntity> categoryMaps, String name) {
         CategoryEntity categoryEntity = categoryMaps.get(name);
-        return categoryEntity != null ? categoryEntity : this.create(name);
+        if (categoryEntity == null) {
+            categoryEntity = this.create(name);
+            if (categoryEntity != null) {
+                categoryMaps.put(name, categoryEntity);
+            }
+        }
+        return categoryEntity;
+
     }
 }

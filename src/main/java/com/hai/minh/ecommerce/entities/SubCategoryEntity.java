@@ -4,6 +4,7 @@ import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sub_categories")
@@ -50,5 +51,18 @@ public class SubCategoryEntity extends AbstractEntity {
 
     public void setProducts(List<ProductEntity> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubCategoryEntity that = (SubCategoryEntity) o;
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

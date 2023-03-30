@@ -9,6 +9,7 @@ import com.hai.minh.ecommerce.services.SubCategoryService;
 import com.hai.minh.ecommerce.utils.CSVUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                 Map<String, CategoryEntity> categoryMaps = categoryService.getCategoryMaps(productDTOS);
                 Map<String, SubCategoryEntity> subCategoryMaps = this.getSubCategoryMaps(productDTOS);
 
-                List<SubCategoryEntity> subCategoryEntities = productDTOS.stream()
+                Set<SubCategoryEntity> subCategoryEntities = productDTOS.stream()
                         .map(it -> {
                             SubCategoryEntity entity = subCategoryMaps.get(it.getSubCategory());
                             if (entity == null) {
@@ -52,9 +53,9 @@ public class SubCategoryServiceImpl implements SubCategoryService {
                             }
                             entity.setCategory(categoryService.getCategoryEntity(categoryMaps, it.getCategory()));
                             return entity;
-                        }).collect(Collectors.toList());
+                        }).collect(Collectors.toSet());
                 if (CollectionUtils.isNotEmpty(subCategoryEntities)) {
-                    subCategoryRepository.saveAll(subCategoryEntities);
+                    subCategoryRepository.saveAllAndFlush(subCategoryEntities);
                 }
                 return true;
             }
@@ -84,6 +85,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
         if (entity == null) {
             entity = new SubCategoryEntity();
             entity.setName(subCategoryName);
+            subCategoryMaps.putIfAbsent(subCategoryName, entity);
         }
         entity.setCategory(categoryService.getCategoryEntity(categoryMaps, categoryName));
         return entity;
