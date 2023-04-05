@@ -8,18 +8,12 @@ import java.sql.Timestamp;
 public class AbstractDTO implements Serializable {
     private static final long serialVersionUID = -6058567028022955338L;
 
-    @JsonProperty("id")
     private Integer id;
-
-    @JsonProperty("is_deleted")
     private boolean isDeleted;
-
-    @JsonProperty("created_at")
     private Timestamp createdAt;
-
-    @JsonProperty("updated_at")
     private Timestamp updatedAt;
 
+    @JsonProperty("id")
     public Integer getId() {
         return id;
     }
@@ -28,6 +22,7 @@ public class AbstractDTO implements Serializable {
         this.id = id;
     }
 
+    @JsonProperty("is_deleted")
     public boolean isDeleted() {
         return isDeleted;
     }
@@ -36,6 +31,7 @@ public class AbstractDTO implements Serializable {
         isDeleted = deleted;
     }
 
+    @JsonProperty("created_at")
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -44,6 +40,7 @@ public class AbstractDTO implements Serializable {
         this.createdAt = createdAt;
     }
 
+    @JsonProperty("updated_at")
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }

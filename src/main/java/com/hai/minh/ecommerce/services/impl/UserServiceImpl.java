@@ -42,7 +42,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity create(UserDTO user) {
-
+        UserEntity userEntity = userRepository.findByEmail(user.getEmail()).orElse(null);
+        if (userEntity != null) {
+            throw new InvalidArgumentException("Email has been exist!");
+        }
         return userRepository.save(userConverter.convertUserDTOToEntity(user));
     }
 
@@ -64,6 +67,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<UserEntity> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

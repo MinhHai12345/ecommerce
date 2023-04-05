@@ -33,6 +33,7 @@ public class UserConverterImpl implements UserConverter {
             dto.setRoles(Sets.newHashSet(roleConverter.convertRoleEntitiesToDTOs(entity.getRoles())));
             dto.setCreatedAt(entity.getCreatedAt());
             dto.setUpdatedAt(entity.getUpdatedAt());
+            dto.setEmail(entity.getEmail());
         }
         return dto;
     }
@@ -51,6 +52,7 @@ public class UserConverterImpl implements UserConverter {
             entity.setUsername(dto.getUsername());
             entity.setPassword(passwordEncoder.encode(dto.getPassword()));
             entity.setRoles(Sets.newHashSet(roleConverter.convertRoleDTOsToEntities(dto.getRoles())));
+            entity.setEmail(dto.getEmail());
         }
         return entity;
     }

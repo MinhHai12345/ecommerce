@@ -14,6 +14,8 @@ public interface UserService {
 
     Optional<UserEntity> findByUsername(String username);
 
+    Optional<UserEntity> findByEmail(String email);
+
     boolean resetPassword(ResetPassworDTO request);
 
 

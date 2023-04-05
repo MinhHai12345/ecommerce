@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @Api(value = "API for User")
 public class UserController extends AbstractController {
 
@@ -26,7 +26,7 @@ public class UserController extends AbstractController {
 
     @PostMapping
     @ApiOperation(value = "Create or update user", response = ResponseEntity.class)
-    public ResponseEntity<Map<String, Object>> create(@RequestBody @Valid final UserDTO userDTO) {
+    public ResponseEntity<Map<String, Object>> createOrUpdate(@RequestBody @Valid final UserDTO userDTO) {
         return success(userService.createOrUpdate(userDTO));
     }
 
