@@ -27,7 +27,7 @@ public class OfficeController extends AbstractController {
     private OfficeService officeService;
 
     @PostMapping(value = URI + "/pdf-to-excel")
-    @ApiOperation(value = "Convert pdf to excel", response = ResponseEntity.class)
+    @ApiOperation(value = "Convert pdf to excel", response = byte.class)
     public ResponseEntity<FileSystemResource> pdfToExcel(@RequestParam("file") final MultipartFile file,
                 @RequestParam(value = "isMerged", required = false, defaultValue = "false") final boolean isMerged)
             throws IOException {

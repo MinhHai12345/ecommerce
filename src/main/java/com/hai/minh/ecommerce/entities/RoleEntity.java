@@ -14,10 +14,10 @@ import javax.persistence.Table;
 public class RoleEntity extends AbstractEntity {
     private static final long serialVersionUID = 7975629404079291184L;
 
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
     private ERole role;
 
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     public ERole getRole() {
         return role;
     }

@@ -24,7 +24,7 @@ public class UserController extends AbstractController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping(value = {"", "/register"})
     @ApiOperation(value = "Create or update user", response = ResponseEntity.class)
     public ResponseEntity<Map<String, Object>> createOrUpdate(@RequestBody @Valid final UserDTO userDTO) {
         return success(userService.createOrUpdate(userDTO));

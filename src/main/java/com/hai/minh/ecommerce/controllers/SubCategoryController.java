@@ -2,7 +2,6 @@ package com.hai.minh.ecommerce.controllers;
 
 
 import com.hai.minh.ecommerce.controllers.commons.AbstractController;
-import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
