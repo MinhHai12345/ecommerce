@@ -32,4 +32,4 @@ app:
     grand-type: client_credentials
   jwt:
     secret: haivo
-    access-token-validity-in-seconds: 60
+    access-token-validity-in-seconds: 3600

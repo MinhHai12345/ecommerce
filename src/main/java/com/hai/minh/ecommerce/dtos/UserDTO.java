@@ -21,6 +21,8 @@ public class UserDTO extends AbstractDTO {
     @NotEmpty(message = " is not empty and minimun 5 characters.")
     private String password;
 
+    private String firstName;
+    private String lastName;
     private Set<RoleDTO> roles;
 
     public String getUsername() {
@@ -33,6 +35,22 @@ public class UserDTO extends AbstractDTO {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setPassword(String password) {

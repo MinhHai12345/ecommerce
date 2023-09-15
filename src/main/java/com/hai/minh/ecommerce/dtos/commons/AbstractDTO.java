@@ -1,6 +1,8 @@
 package com.hai.minh.ecommerce.dtos.commons;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hai.minh.ecommerce.commons.constants.Constants;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -32,6 +34,7 @@ public class AbstractDTO implements Serializable {
     }
 
     @JsonProperty("created_at")
+    @JsonFormat(pattern = Constants.DATE_FORMAT_DDMMYYYYHHMMSS_HYPHEN, timezone = Constants.GLOBAL_TIMEZONE)
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -41,6 +44,7 @@ public class AbstractDTO implements Serializable {
     }
 
     @JsonProperty("updated_at")
+    @JsonFormat(pattern = Constants.DATE_FORMAT_DDMMYYYYHHMMSS_HYPHEN, timezone = Constants.GLOBAL_TIMEZONE)
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }

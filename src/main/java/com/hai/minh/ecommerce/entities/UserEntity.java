@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import com.hai.minh.ecommerce.dtos.UserDTO;
 import com.hai.minh.ecommerce.entities.commons.AbstractEntity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,6 +20,8 @@ public class UserEntity extends AbstractEntity {
 
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
     private String email;
     private Set<RoleEntity> roles = Sets.newHashSet();
 
@@ -42,6 +43,24 @@ public class UserEntity extends AbstractEntity {
         this.password = password;
     }
 
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -51,7 +70,7 @@ public class UserEntity extends AbstractEntity {
         this.email = email;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -69,6 +88,8 @@ public class UserEntity extends AbstractEntity {
             this.setId(dto.getId());
             this.setEmail(dto.getEmail());
             this.setUsername(dto.getUsername());
+            this.setFirstName(dto.getFirstName());
+            this.setLastName(dto.getLastName());
             this.setRoles(roles);
             this.setDeleted(dto.isDeleted());
         }
