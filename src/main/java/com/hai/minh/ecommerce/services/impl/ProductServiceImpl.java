@@ -4,8 +4,6 @@ import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.CategoryEntity;
 import com.hai.minh.ecommerce.entities.ProductEntity;
 import com.hai.minh.ecommerce.entities.SubCategoryEntity;
-import com.hai.minh.ecommerce.ep.converter.EPProductConverter;
-import com.hai.minh.ecommerce.ep.dtos.products.EPProductDto;
 import com.hai.minh.ecommerce.repository.ProductRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.ProductService;
@@ -15,7 +13,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,9 +36,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private EPProductConverter epProductConverter;
 
     @Override
     @Transactional
@@ -92,18 +86,4 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toMap(ProductEntity::getSku, Function.identity()));
     }
 
-    @Override
-    public ResponseEntity<Map<String, Object>> createProductToEP() {
-        logger.info("START PRODUCT SERVICES");
-        List<ProductEntity> products = productRepository.findAll();
-        if (CollectionUtils.isNotEmpty(products)) {
-            for (ProductEntity product : products) {
-                logger.info("LOOP FOREACH PRODUCT SERVICES");
-                final EPProductDto request = epProductConverter.convertToEpProductData(product);
-//                amqpTemplate.convertAndSend(rabbitConfigProperties.getQueueCreateProduct(), request);
-            }
-        }
-        logger.info("END PRODUCT SERVICES");
-        return null;
-    }
 }

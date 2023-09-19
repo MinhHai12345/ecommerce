@@ -7,13 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class AppProperties {
 
-    private final ElasticPath elasticPath = new ElasticPath();
-
     private final Jwt jwt = new Jwt();
-
-    public ElasticPath getElasticPath() {
-        return elasticPath;
-    }
 
     public Jwt getJwt() {
         return jwt;
