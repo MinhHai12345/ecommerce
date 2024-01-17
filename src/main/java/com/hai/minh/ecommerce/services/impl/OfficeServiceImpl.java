@@ -33,9 +33,9 @@ public class OfficeServiceImpl implements OfficeService {
             pdf.getConvertOptions().setPdfToXlsxOptions(new XlsxLineLayoutOptions(!isMerged, false, false));
             String fileName = this.buildExcelNameFromPDFFile(file.getOriginalFilename());
             pdf.saveToFile(fileName, FileFormat.XLSX);
-            File fileTemp = new File(fileName);
+            File fileTemp = File.createTempFile(fileName, null);
             results = FileUtils.readFileToByteArray(fileTemp);
-            fileTemp.delete();
+            fileTemp.deleteOnExit();
         } catch (IOException e) {
             logger.error(" Convert PDF file to EXCEL file fail! ".concat(e.getMessage()));
         }
@@ -60,7 +60,7 @@ public class OfficeServiceImpl implements OfficeService {
             tesseract.setDatapath(Constants.TESS4J_DIRECTORY);
             File fileTemp = File.createTempFile(Objects.requireNonNull(file.getOriginalFilename()), null);
             results = tesseract.doOCR(fileTemp);
-            fileTemp.delete();
+            fileTemp.deleteOnExit();
         } catch (TesseractException | IOException e) {
             logger.error(" Convert image file to Text fail! ".concat(e.getMessage()));
         }

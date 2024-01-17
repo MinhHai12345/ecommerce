@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.jwt;
+package com.hai.minh.ecommerce.security.jwt;
 
 public class JwtConstant {
     public static final String AUTHORIZATION = "Authorization";

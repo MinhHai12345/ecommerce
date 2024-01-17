@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.jwt;
+package com.hai.minh.ecommerce.security.jwt;
 
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,8 +17,6 @@ public class JwtTokenExtractor {
     public String extract(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtConstant.AUTHORIZATION);
         if (bearerToken != null) {
-
-
             this.checkBearerToken(bearerToken);
         }
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtConstant.BEARER)) {

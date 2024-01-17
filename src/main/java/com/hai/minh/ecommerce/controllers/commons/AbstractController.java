@@ -11,8 +11,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,13 +26,7 @@ public abstract class AbstractController {
         successRes.put(Constants.DATA, data);
         String codeRes = StringUtils.hasText(code) ? code : HttpStatus.OK.name();
         successRes.put(Constants.CODE, codeRes);
-//        if (StringUtils.hasText(message)) {
-//            final String translated = needTranslate ? CommonResourceBundle.getMessage(message)
-//                    : message;
-//            successRes.put(Constants.MESSAGE, translated);
-//        } else {
-//            successRes.put(Constants.MESSAGE, HttpStatus.OK.name());
-//        }
+        successRes.put(Constants.MESSAGE, message);
         return new ResponseEntity<>(successRes, HttpStatus.OK);
     }
 

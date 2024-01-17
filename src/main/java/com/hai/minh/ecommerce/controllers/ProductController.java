@@ -28,9 +28,4 @@ public class ProductController extends AbstractController {
         return success(productService.importProducts(file));
     }
 
-    @PostMapping
-    @ApiOperation(value = "ADD PRODUCT TO EP", response = ResponseEntity.class)
-    public ResponseEntity<Map<String, Object>> addProductToEP() {
-        return success(productService.createProductToEP());
-    }
 }

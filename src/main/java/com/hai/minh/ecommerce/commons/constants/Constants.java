@@ -1,5 +1,9 @@
 package com.hai.minh.ecommerce.commons.constants;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 public class Constants {
     // Key rest response.
     public static final String DATA = "data";
@@ -16,6 +20,7 @@ public class Constants {
     // File
     public static final String CSV_TYPE = "text/csv";
     public static final String EXCEL_EXTENSION = ".xlsx";
+    public static final List<String> CSV_EXTENSIONS = Lists.newArrayList(".csv");
     public static final String PDF_EXTENSION = ".pdf";
     public static final String EXCEL_DEFAULT_NAME = "excel";
 

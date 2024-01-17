@@ -5,7 +5,7 @@ import com.hai.minh.ecommerce.dtos.login.request.LoginRequest;
 import com.hai.minh.ecommerce.dtos.login.response.LoginResponse;
 import com.hai.minh.ecommerce.entities.UserEntity;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
-import com.hai.minh.ecommerce.jwt.JwtTokenUtil;
+import com.hai.minh.ecommerce.security.jwt.JwtTokenUtil;
 import com.hai.minh.ecommerce.repository.UserRepository;
 import com.hai.minh.ecommerce.services.AuthenticationService;
 import org.slf4j.Logger;

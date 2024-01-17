@@ -1,4 +1,4 @@
-package com.hai.minh.ecommerce.jwt;
+package com.hai.minh.ecommerce.security.jwt;
 
 import com.hai.minh.ecommerce.services.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.hai.minh.ecommerce.configs;
 
-import com.hai.minh.ecommerce.jwt.JwtAuthenticationEntryPoint;
-import com.hai.minh.ecommerce.jwt.JwtTokenFilter;
+import com.hai.minh.ecommerce.security.jwt.JwtTokenFilter;
+import com.hai.minh.ecommerce.security.jwt.JwtAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
