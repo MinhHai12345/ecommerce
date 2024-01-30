@@ -2,17 +2,16 @@ package com.hai.minh.ecommerce.security.jwt;
 
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenExtractor {
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public String extract(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtConstant.AUTHORIZATION);

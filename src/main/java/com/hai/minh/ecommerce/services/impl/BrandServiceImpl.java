@@ -4,9 +4,9 @@ import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.repository.BrandRepository;
 import com.hai.minh.ecommerce.services.BrandService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +18,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
+    private final BrandRepository brandRepository;
 
-    @Autowired
-    private BrandRepository brandRepository;
-
-    @Transactional
     @Override
+    @Transactional
     public List<BrandEntity> saveBrandWithCSV(List<CSVProductDTO> csvProductDTO) {
 
         Set<String> brandNames = csvProductDTO.stream()

@@ -5,7 +5,7 @@ import com.hai.minh.ecommerce.controllers.commons.AbstractController;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +18,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/sub-categories")
 @Api(value = "API for sub category")
+@RequiredArgsConstructor
 public class SubCategoryController extends AbstractController {
 
-    @Autowired
-    private SubCategoryService subCategoryService;
+    private final SubCategoryService subCategoryService;
 
     @PostMapping(value = "/import")
     @ApiOperation(value = "Import sub categories", response = ResponseEntity.class)
