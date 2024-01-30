@@ -6,17 +6,14 @@ import com.hai.minh.ecommerce.entities.RoleEntity;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import com.hai.minh.ecommerce.repository.RoleRepository;
 import com.hai.minh.ecommerce.services.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private RoleConverter roleConverter;
+    private final RoleRepository roleRepository;
+    private final RoleConverter roleConverter;
 
     @Override
     public RoleDTO createOrUpdate(RoleDTO role) {

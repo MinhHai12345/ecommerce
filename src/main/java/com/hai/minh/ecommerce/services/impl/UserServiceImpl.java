@@ -8,9 +8,9 @@ import com.hai.minh.ecommerce.entities.UserEntity;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import com.hai.minh.ecommerce.repository.UserRepository;
 import com.hai.minh.ecommerce.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,20 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserConverter userConverter;
-
-    @Autowired
-    private RoleConverter roleConverter;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
+    private final RoleConverter roleConverter;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional

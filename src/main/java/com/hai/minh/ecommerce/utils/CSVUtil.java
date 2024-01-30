@@ -23,8 +23,8 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 
-public class CSVUtils {
-    private static final Logger logger = LoggerFactory.getLogger(CSVUtils.class);
+public class CSVUtil {
+    private static final Logger logger = LoggerFactory.getLogger(CSVUtil.class);
 
     public static void isCSVFormat(final MultipartFile file) {
         if (!FilenameUtils.isExtension(file.getOriginalFilename(), Constants.CSV_EXTENSIONS)) {

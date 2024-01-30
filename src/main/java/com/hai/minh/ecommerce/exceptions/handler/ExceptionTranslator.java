@@ -1,6 +1,8 @@
 package com.hai.minh.ecommerce.exceptions.handler;
 
 import com.hai.minh.ecommerce.dtos.errors.ErrorDTO;
+import com.hai.minh.ecommerce.exceptions.CustomHttpServerErrorException;
+import com.hai.minh.ecommerce.exceptions.CustomRestClientException;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import com.hai.minh.ecommerce.exceptions.InvalidFileException;
 import org.slf4j.Logger;
@@ -19,8 +21,32 @@ public class ExceptionTranslator {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidArgumentException.class, InvalidFileException.class})
-    public ErrorDTO invalidException(InvalidArgumentException ex, HttpServletRequest request) {
+    @ExceptionHandler(InvalidArgumentException.class)
+    public ErrorDTO invalidArgumentException(InvalidArgumentException ex, HttpServletRequest request) {
+        logger.error(ex.getMessage(), ex);
+        return new ErrorDTO(ex.getCode(), ex.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidFileException.class)
+    public ErrorDTO invalidFileException(InvalidFileException ex, HttpServletRequest request) {
+        logger.error(ex.getMessage(), ex);
+        return new ErrorDTO(ex.getCode(), ex.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ExceptionHandler(CustomRestClientException.class)
+    public ErrorDTO restClientException(CustomRestClientException ex, HttpServletRequest request) {
+        logger.error(ex.getMessage(), ex);
+        return new ErrorDTO(ex.getCode(), ex.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(CustomHttpServerErrorException.class)
+    public ErrorDTO serverErrorException(CustomHttpServerErrorException ex, HttpServletRequest request) {
         logger.error(ex.getMessage(), ex);
         return new ErrorDTO(ex.getCode(), ex.getMessage(), request.getRequestURI());
     }

@@ -5,12 +5,12 @@ import com.hai.minh.ecommerce.dtos.login.request.LoginRequest;
 import com.hai.minh.ecommerce.dtos.login.response.LoginResponse;
 import com.hai.minh.ecommerce.entities.UserEntity;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
-import com.hai.minh.ecommerce.security.jwt.JwtTokenUtil;
 import com.hai.minh.ecommerce.repository.UserRepository;
+import com.hai.minh.ecommerce.security.jwt.JwtTokenUtil;
 import com.hai.minh.ecommerce.services.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,23 +19,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-
-    @Autowired
-    private UserConverter userConverter;
-
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final UserConverter userConverter;
+    private final UserRepository userRepository;
 
     @Override
     public LoginResponse login(final LoginRequest request) {

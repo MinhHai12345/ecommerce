@@ -6,7 +6,8 @@ import com.hai.minh.ecommerce.entities.SubCategoryEntity;
 import com.hai.minh.ecommerce.repository.SubCategoryRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
-import com.hai.minh.ecommerce.utils.CSVUtils;
+import com.hai.minh.ecommerce.utils.CSVUtil;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,20 +25,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SubCategoryServiceImpl implements SubCategoryService {
     private static final Logger logger = LoggerFactory.getLogger(SubCategoryServiceImpl.class);
 
-    @Autowired
-    private SubCategoryRepository subCategoryRepository;
-
-    @Autowired
-    private CategoryService categoryService;
+    private final SubCategoryRepository subCategoryRepository;
+    private final CategoryService categoryService;
 
     @Override
     @Transactional
     public boolean importSubCategories(MultipartFile file) {
         try {
-            List<CSVProductDTO> productDTOS = CSVUtils.csvToDTO(file, CSVProductDTO.class);
+            List<CSVProductDTO> productDTOS = CSVUtil.csvToDTO(file, CSVProductDTO.class);
             if (CollectionUtils.isNotEmpty(productDTOS)) {
                 Map<String, CategoryEntity> categoryMaps = categoryService.getCategoryMaps(productDTOS);
                 Map<String, SubCategoryEntity> subCategoryMaps = this.getSubCategoryMaps(productDTOS);

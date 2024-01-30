@@ -6,7 +6,7 @@ import com.hai.minh.ecommerce.dtos.login.request.ResetPassworDTO;
 import com.hai.minh.ecommerce.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +19,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/users")
 @Api(value = "API for User")
+@RequiredArgsConstructor
 public class UserController extends AbstractController {
-
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping(value = {"", "/register"})
     @ApiOperation(value = "Create or update user", response = ResponseEntity.class)

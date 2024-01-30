@@ -1,6 +1,6 @@
 package com.hai.minh.ecommerce.exceptions;
 
-import com.hai.minh.ecommerce.commons.constants.Constants;
+import com.hai.minh.ecommerce.commons.constants.ErrorConstants;
 import org.springframework.util.StringUtils;
 
 public class InvalidArgumentException extends RuntimeException {
@@ -14,7 +14,7 @@ public class InvalidArgumentException extends RuntimeException {
 
     public InvalidArgumentException(final String code, final String message) {
         super(message);
-        this.code = StringUtils.hasText(code) ? code : Constants.ERROR;
+        this.code = StringUtils.hasText(code) ? code : ErrorConstants.ERR_INVALID_ARGUMENT;
     }
 
     public String getCode() {

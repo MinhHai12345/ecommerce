@@ -5,7 +5,7 @@ import com.hai.minh.ecommerce.controllers.commons.AbstractController;
 import com.hai.minh.ecommerce.services.OfficeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +20,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @Api(value = "API for Office")
+@RequiredArgsConstructor
 public class OfficeController extends AbstractController {
     private static final String URI = "/office/convert";
 
-    @Autowired
-    private OfficeService officeService;
+    private final OfficeService officeService;
 
     @PostMapping(value = URI + "/pdf-to-excel")
     @ApiOperation(value = "Convert pdf to excel", response = byte.class)

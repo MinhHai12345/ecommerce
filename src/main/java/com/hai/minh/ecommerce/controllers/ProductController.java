@@ -4,7 +4,7 @@ import com.hai.minh.ecommerce.controllers.commons.AbstractController;
 import com.hai.minh.ecommerce.services.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +17,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/products")
 @Api(value = "API for Product")
+@RequiredArgsConstructor
 public class ProductController extends AbstractController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @PostMapping(value = "/import")
     @ApiOperation(value = "Import products", response = ResponseEntity.class)
