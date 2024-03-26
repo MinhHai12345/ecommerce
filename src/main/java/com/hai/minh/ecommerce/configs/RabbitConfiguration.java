@@ -1,6 +1,5 @@
 package com.hai.minh.ecommerce.configs;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,11 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import javax.annotation.Resource;
+
 @Configuration
-@RequiredArgsConstructor
 public class RabbitConfiguration {
-    private static final String EP_PRODUCT_QUEUE_NAME = "ep-product";
-    private final RabbitProperties rabbitProperties;
+    @Resource
+    private RabbitProperties rabbitProperties;
 
     @Bean
     @Primary

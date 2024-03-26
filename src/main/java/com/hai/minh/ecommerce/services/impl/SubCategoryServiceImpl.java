@@ -7,15 +7,14 @@ import com.hai.minh.ecommerce.repository.SubCategoryRepository;
 import com.hai.minh.ecommerce.services.CategoryService;
 import com.hai.minh.ecommerce.services.SubCategoryService;
 import com.hai.minh.ecommerce.utils.CSVUtil;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -25,12 +24,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class SubCategoryServiceImpl implements SubCategoryService {
     private static final Logger logger = LoggerFactory.getLogger(SubCategoryServiceImpl.class);
 
-    private final SubCategoryRepository subCategoryRepository;
-    private final CategoryService categoryService;
+    @Resource
+    private SubCategoryRepository subCategoryRepository;
+    @Resource
+    private CategoryService categoryService;
 
     @Override
     @Transactional

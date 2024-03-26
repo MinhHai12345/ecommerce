@@ -96,13 +96,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${org.projectlombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>e-iceblue</groupId>
             <artifactId>spire.pdf</artifactId>
             <version>${e-iceblue.pdf.version}</version>

@@ -4,12 +4,12 @@ import com.hai.minh.ecommerce.dtos.products.CSVProductDTO;
 import com.hai.minh.ecommerce.entities.BrandEntity;
 import com.hai.minh.ecommerce.repository.BrandRepository;
 import com.hai.minh.ecommerce.services.BrandService;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +18,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
-    private final BrandRepository brandRepository;
+
+    @Resource
+    private BrandRepository brandRepository;
 
     @Override
     @Transactional

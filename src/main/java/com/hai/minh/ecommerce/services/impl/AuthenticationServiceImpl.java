@@ -8,7 +8,6 @@ import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import com.hai.minh.ecommerce.repository.UserRepository;
 import com.hai.minh.ecommerce.security.jwt.JwtTokenUtil;
 import com.hai.minh.ecommerce.services.AuthenticationService;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,19 +17,29 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
-@RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenUtil jwtTokenUtil;
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final UserConverter userConverter;
-    private final UserRepository userRepository;
+    @Resource
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Resource
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    @Resource
+    private UserConverter userConverter;
+
+    @Resource
+    private UserRepository userRepository;
 
     @Override
-    public LoginResponse login(final LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         LoginResponse loginResponse = null;
         try {
             this.authenticate(request.getUsername(), request.getPassword());

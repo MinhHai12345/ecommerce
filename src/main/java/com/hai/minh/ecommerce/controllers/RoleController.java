@@ -6,23 +6,23 @@ import com.hai.minh.ecommerce.dtos.RoleDTO;
 import com.hai.minh.ecommerce.services.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/roles")
 @Api(value = "API for Role")
-@RequiredArgsConstructor
 public class RoleController extends AbstractController {
 
-    private final RoleService roleService;
+    @Resource
+    private RoleService roleService;
 
     @PostMapping
     @ApiOperation(value = "Create or update role", response = ResponseEntity.class)

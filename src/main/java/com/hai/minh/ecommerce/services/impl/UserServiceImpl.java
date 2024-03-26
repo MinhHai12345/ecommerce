@@ -3,29 +3,32 @@ package com.hai.minh.ecommerce.services.impl;
 import com.hai.minh.ecommerce.converter.RoleConverter;
 import com.hai.minh.ecommerce.converter.UserConverter;
 import com.hai.minh.ecommerce.dtos.UserDTO;
-import com.hai.minh.ecommerce.dtos.login.request.ResetPassworDTO;
+import com.hai.minh.ecommerce.dtos.login.request.ResetPasswordDTO;
 import com.hai.minh.ecommerce.entities.UserEntity;
 import com.hai.minh.ecommerce.exceptions.InvalidArgumentException;
 import com.hai.minh.ecommerce.repository.UserRepository;
 import com.hai.minh.ecommerce.services.UserService;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private final UserRepository userRepository;
-    private final UserConverter userConverter;
-    private final RoleConverter roleConverter;
-    private final PasswordEncoder passwordEncoder;
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private UserConverter userConverter;
+    @Resource
+    private RoleConverter roleConverter;
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -74,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean resetPassword(ResetPassworDTO request) {
+    public boolean resetPassword(ResetPasswordDTO request) {
         if (request != null) {
             if (!request.getPassword().equals(request.getRepeatPassword())) {
                 throw new InvalidArgumentException("Password not match repeat password!");

@@ -13,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -65,18 +64,17 @@ public final class RestClientUtil {
         }
     }
 
-    public <S, R> ResponseEntity<R> callRest(final HttpMethod httpMethod, final String url,
+    public <S, R> R callRest(final HttpMethod httpMethod, final String url,
                                              final HttpHeaders httpHeaders, final S requestData,
                                              final Class<R> responseType) {
         try {
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
             HttpEntity<?> requestEntity = this.getHttpEntity(httpHeaders, requestData);
-            ResponseEntity<R> responseEntity = restTemplate.exchange(url, httpMethod,
-                    requestEntity, responseType);
+            R response = restTemplate.exchange(url, httpMethod, requestEntity, responseType).getBody();
             stopWatch.stop();
-            this.logRequestInformation(httpMethod.name(), url, stopWatch.getTotalTimeSeconds(), requestData);
-            return responseEntity;
+            this.logCallRestInformation(httpMethod.name(), url, stopWatch.getTotalTimeSeconds(), requestData, response);
+            return response;
         } catch (HttpClientErrorException ex) {
             if (HttpStatus.UNAUTHORIZED.equals(ex.getStatusCode())) {
                 throw new CustomRestClientException(ErrorConstants.ERR_UNAUTHORIZED, "Invalid User ID or Password.");
@@ -107,9 +105,6 @@ public final class RestClientUtil {
     private <S> MultiValueMap<String, Object> convert2RequestParameters(final S requestData) {
         MultiValueMap<String, Object> requestParameters = null;
         if (requestData != null) {
-            if (requestData instanceof MultiValueMap) {
-                return (MultiValueMap<String, Object>) requestData;
-            }
             requestParameters = new LinkedMultiValueMap<>();
             final ObjectMapper mapper = new ObjectMapper();
             final Map<String, Object> mapData = mapper.convertValue(requestData,
@@ -124,11 +119,13 @@ public final class RestClientUtil {
         return requestParameters;
     }
 
-    private void logRequestInformation(final String methodName, final String uri, final double durationTimes, final Object payload) {
-        log.info("Rest client call api with method name='{}', url='{}', duration = {}(s), payload={}", methodName, uri, durationTimes, payload);
+    private <R> void logCallRestInformation(final String methodName, final String uri, final double durationTimes,
+                                            final Object payload, R response) {
+        log.info("Rest client call api with method name='{}', url='{}', duration = {}(s), payload={}, response = {}",
+                methodName, uri, durationTimes, payload, response);
     }
 
-    private HttpHeaders getHttpHeaderAgility(String contextId, String branchId) {
+    private HttpHeaders buildAgilityHttpHeader(String contextId, String branchId) {
         return new HttpHeaderBuilder()
                 .setContentType(MediaType.APPLICATION_JSON)
                 .addAgilityHeader(contextId, branchId)

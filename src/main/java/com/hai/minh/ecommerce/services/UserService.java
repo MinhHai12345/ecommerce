@@ -1,7 +1,7 @@
 package com.hai.minh.ecommerce.services;
 
 import com.hai.minh.ecommerce.dtos.UserDTO;
-import com.hai.minh.ecommerce.dtos.login.request.ResetPassworDTO;
+import com.hai.minh.ecommerce.dtos.login.request.ResetPasswordDTO;
 import com.hai.minh.ecommerce.entities.UserEntity;
 
 import java.util.Optional;
@@ -16,7 +16,7 @@ public interface UserService {
 
     Optional<UserEntity> findByEmail(String email);
 
-    boolean resetPassword(ResetPassworDTO request);
+    boolean resetPassword(ResetPasswordDTO request);
 
 
 }

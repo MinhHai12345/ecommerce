@@ -1,14 +1,12 @@
 package com.hai.minh.ecommerce.dtos.login.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-@Data
-public class ResetPassworDTO implements Serializable {
+public class ResetPasswordDTO implements Serializable {
     private static final long serialVersionUID = 1110210071606187423L;
 
     @JsonProperty("username")
@@ -25,4 +23,27 @@ public class ResetPassworDTO implements Serializable {
     @NotEmpty(message = " is not empty and minimun 5 characters.")
     private String repeatPassword;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
+    }
 }
