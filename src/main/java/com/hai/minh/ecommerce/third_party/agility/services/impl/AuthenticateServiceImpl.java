@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticateServiceImpl implements AuthenticateService {
-    private final Logger log = LoggerFactory.getLogger(AuthenticateServiceImpl.class);
 
 
 }
