@@ -1,0 +1,26 @@
+package com.hai.minh.ecommerce.security;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hai.minh.ecommerce.constant.Constants;
+import com.hai.minh.ecommerce.common.model.response.Error;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
+@Component
+public class AuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getWriter(), new Error(Constants.ERROR,
+                HttpStatus.UNAUTHORIZED.getReasonPhrase()));
+    }
+}
