@@ -2,6 +2,7 @@ package com.hai.minh.ecommerce.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hai.minh.ecommerce.constant.Constants;
+import com.hai.minh.ecommerce.interceptor.InterceptingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, InterceptingEntityListener.class})
 public abstract class AbstractEntity implements Serializable {
 
     @Serial
