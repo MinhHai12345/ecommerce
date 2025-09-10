@@ -5,32 +5,15 @@ spring:
     url: jdbc:mysql://localhost:3306/ecommerce?serverTimezone=UTC&useSSL=false
     username: root
     password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.zaxxer.hikari.HikariDataSource
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-#        jdbc:
-#          batch_size: 100000
-#        order_inserts: true
-#        order_updates: true
-#        generate_statistics: true
-  servlet:
-    multipart:
-      max-request-size: 10MB
-      max-file-size: 10MB
   rabbitmq:
     host: localhost
     port: 15672
     username: dev
     password: DevDigi@123
 
-app:
+commerce:
   jwt:
     secret: hai_vo
     access-token-validity-in-seconds: 3600
@@ -38,3 +21,5 @@ app:
     template:
       connect-timeout: 30000
       connect-request-timeout: 30000
+  initial-data:
+    auto-import: true

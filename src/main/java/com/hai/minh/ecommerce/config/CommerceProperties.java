@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "app")
+@ConfigurationProperties(prefix = "commerce")
 public class CommerceProperties {
 
     @NotNull
@@ -18,6 +18,9 @@ public class CommerceProperties {
 
     @NotNull
     private Rest rest;
+
+    @NotNull
+    private InitialData initialData;
 
     @Getter
     @Setter
@@ -48,6 +51,15 @@ public class CommerceProperties {
             @NotBlank
             private int connectRequestTimeout;
         }
+    }
+
+    @Getter
+    @Setter
+    public static class InitialData {
+
+        @NotBlank
+        private boolean autoImport;
+
     }
 
 }

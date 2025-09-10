@@ -1,17 +1,16 @@
 package com.hai.minh.ecommerce.interceptor;
 
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 @SuppressWarnings("unchecked")
 public class EntityInterceptor {
-
-    @Resource
-    private List<Interceptor> interceptors;
+    private final List<Interceptor> interceptors;
 
     public void onPrePersist(Object entity) {
         dispatch(entity, PrePersistInterceptor.class, i -> ((PrePersistInterceptor<Object>) i).onPrePersist(entity));
