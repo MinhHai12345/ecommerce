@@ -16,7 +16,8 @@ public class CustomHttpServerErrorException extends HttpServerErrorException {
     private final String code;
     private final String message;
 
-    public CustomHttpServerErrorException(HttpStatus statusCode, String statusText, HttpHeaders headers, byte[] body, Charset charset, String message) {
+    public CustomHttpServerErrorException(HttpStatus statusCode, String statusText, HttpHeaders headers,
+                                          byte[] body, Charset charset, String message) {
         super(statusCode, statusText, headers, body, charset);
         this.message = message;
         this.code = Constants.ERR_INTERNAL_SERVER_ERROR;

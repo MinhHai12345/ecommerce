@@ -1,7 +1,7 @@
 package com.hai.minh.ecommerce.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -10,15 +10,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
+@RequiredArgsConstructor
 public class CommerceConfiguration {
-    @Resource
-    private CommerceProperties commerceProperties;
+    private final CommerceProperties commerceProperties;
 
     @Bean
     public RestTemplate restTemplate() {
         final RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
         restTemplate.getMessageConverters().add(0, new MappingJackson2HttpMessageConverter(new ObjectMapper()));
-//        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
         return restTemplate;
     }
 

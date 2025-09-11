@@ -23,10 +23,7 @@ import java.time.Instant;
 @Setter
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class, InterceptingEntityListener.class})
-public abstract class AbstractEntity implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1931996178528043954L;
+public abstract class AbstractEntity {
 
     @Id
     @Column(unique = true, nullable = false)

@@ -1,6 +1,6 @@
 package com.hai.minh.ecommerce.config;
 
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
+@RequiredArgsConstructor
 public class RabbitConfiguration {
-    @Resource
-    private RabbitProperties rabbitProperties;
+    private final RabbitProperties rabbitProperties;
 
     @Bean
     @Primary

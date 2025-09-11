@@ -5,14 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hai.minh.ecommerce.constant.Constants;
 import com.hai.minh.ecommerce.exception.CustomHttpServerErrorException;
 import com.hai.minh.ecommerce.exception.CustomRestClientException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,11 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public final class RestClientUtil {
     private final Logger log = LoggerFactory.getLogger(RestClientUtil.class);
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public <S, R> R callRest(final HttpMethod httpMethod, final String url,
                              final HttpHeaders httpHeaders, final S requestData,
@@ -50,7 +46,7 @@ public final class RestClientUtil {
             throw new CustomRestClientException(ex.getMessage());
         } catch (HttpServerErrorException ex) {
             this.log.error("::::: Error rest client call api with url='{}'", url);
-            throw new CustomHttpServerErrorException(ex.getStatusCode(), ex.getStatusText(),
+            throw new CustomHttpServerErrorException(null, ex.getStatusText(),
                     ex.getResponseHeaders(), ex.getResponseBodyAsByteArray(), null, ex.getMessage());
         } catch (final Exception ex) {
             this.log.error("::::: Error rest client call api with url='{}'", url);

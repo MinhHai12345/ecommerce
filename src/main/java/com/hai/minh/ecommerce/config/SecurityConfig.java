@@ -2,7 +2,7 @@ package com.hai.minh.ecommerce.config;
 
 import com.hai.minh.ecommerce.security.AuthenticationEntryPoint;
 import com.hai.minh.ecommerce.security.TokenFilter;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,14 +22,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-    @Resource
-    private UserDetailsService userDetailsService;
-    @Resource
-    private AuthenticationEntryPoint authenticationEntryPoint;
-    @Resource
-    private TokenFilter tokenFilter;
+    private final UserDetailsService userDetailsService;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final TokenFilter tokenFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
